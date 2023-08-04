@@ -23,12 +23,13 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    await SeedData.InitializeAsync(userManager, roleManager);
+    SeedData.InitializeAsync(dbContext, userManager, roleManager).Wait();
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

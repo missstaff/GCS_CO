@@ -1,10 +1,75 @@
 ﻿using Microsoft.AspNetCore.Identity;
-
+using GCS_CO.Models;
 namespace GCS_CO.Data
 {
     public static class SeedData
     {
-        public static async Task InitializeAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            await SeedRegionsAsync(context);
+            await SeedSkillsAsync(context);
+            await SeedUsersAndRolesAsync(userManager, roleManager);
+        }
+
+        private static async Task SeedRegionsAsync(ApplicationDbContext context)
+        {
+            if (context.Regions.Any())
+            {
+                return;
+            }
+
+            var regions = new Region[]
+            {
+                new Region { Name = "Northwest", Abbreviation = "NW" },
+                new Region { Name = "Southwest", Abbreviation = "SW" },
+                new Region { Name = "Midwest", Abbreviation = "MW" },
+                new Region { Name = "Northeast", Abbreviation = "NE" },
+                new Region { Name = "Southeast", Abbreviation = "SE" },
+            };
+
+            await context.Regions.AddRangeAsync(regions);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedSkillsAsync(ApplicationDbContext context)
+        {
+            if (context.Skills.Any())
+            {
+                return;
+            }
+
+            var skills = new Skill[]
+            {
+                new Skill { Name = "Data Entry 1", Description = "Data Entry 1", RateOfPay = 50 },
+                new Skill { Name = "Data Entry 2", Description = "Data Entry 2", RateOfPay = 75 },
+                new Skill { Name = "Systems Analyst 1", Description = "Systems Analyst 1", RateOfPay = 80 },
+                new Skill { Name = "Systems Analyst 2", Description = "Systems Analyst 2", RateOfPay = 90 },
+                new Skill { Name = "DB Designer 1", Description = "DB Designer 1", RateOfPay = 90 },
+                new Skill { Name = "DB Designer 2", Description = "DB Designer 2", RateOfPay = 90 },
+                new Skill { Name = "Cobol 1", Description = "Cobol 1", RateOfPay = 120 },
+                new Skill { Name = "Cobol 2", Description = "Cobol 2", RateOfPay = 150 },
+                new Skill { Name = "C++ 1", Description = "C++ 1", RateOfPay = 90 },
+                new Skill { Name = "C++ 2", Description = "C++ 2", RateOfPay = 110 },
+                new Skill { Name = "VB 1", Description = "VB 1", RateOfPay = 100 },
+                new Skill { Name = "VB 2", Description = "VB 2", RateOfPay = 120 },
+                new Skill { Name = "Cold Fusion 1", Description = "Cold Fusion 1", RateOfPay = 120 },
+                new Skill { Name = "Cold Fusion 2", Description = "Cold Fusion 2", RateOfPay = 150 },
+                new Skill { Name = "ASP 1", Description = "ASP 1", RateOfPay = 70 },
+                new Skill { Name = "ASP 2", Description = "ASP 2", RateOfPay = 90 },
+                new Skill { Name = "Oracle DBA", Description = "Oracle DBA", RateOfPay = 150 },
+                new Skill { Name = "SQL Server DBA", Description = "SQL Server DBA", RateOfPay = 150 },
+                new Skill { Name = "Network Engineer 1", Description = "Network Engineer 1", RateOfPay = 90 },
+                new Skill { Name = "Network Engineer 2", Description = "Network Engineer 2", RateOfPay = 130 },
+                new Skill { Name = "Web Administrator", Description = "Web Administrator", RateOfPay = 50 },
+                new Skill { Name = "Technical Writer", Description = "Technical Writer", RateOfPay = 90 },
+                new Skill { Name = "Project Manager", Description = "Project Manager", RateOfPay = 180 },
+            };
+
+            await context.Skills.AddRangeAsync(skills);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedUsersAndRolesAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             // Create the admin role if it doesn't exist
             var adminRoleExists = await roleManager.RoleExistsAsync("Admin");
