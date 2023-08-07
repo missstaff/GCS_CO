@@ -4,7 +4,7 @@ namespace GCS_CO.Data
 {
     public static class SeedData
     {
-        public static async Task InitializeAsync(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(ApplicationDbContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             await SeedRegionsAsync(context);
             await SeedSkillsAsync(context);
@@ -69,7 +69,7 @@ namespace GCS_CO.Data
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedUsersAndRolesAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        private static async Task SeedUsersAndRolesAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             // Create the admin role if it doesn't exist
             var adminRoleExists = await roleManager.RoleExistsAsync("Admin");
@@ -85,11 +85,12 @@ namespace GCS_CO.Data
 
             if (adminUser == null)
             {
-                adminUser = new IdentityUser
+                adminUser = new AppUser
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName = "Admin",
                 };
 
                 await userManager.CreateAsync(adminUser, adminPassword);
@@ -110,11 +111,12 @@ namespace GCS_CO.Data
 
             if (managerUser == null)
             {
-                managerUser = new IdentityUser
+                managerUser = new AppUser
                 {
                     UserName = managerEmail,
                     Email = managerEmail,
                     EmailConfirmed = true,
+                    FirstName = "JJ",
                 };
 
                 await userManager.CreateAsync(managerUser, managerPassword);
@@ -129,17 +131,18 @@ namespace GCS_CO.Data
             }
 
             // Create a team member user if it doesn't exist
-            var teamMemberEmail = "tm@gcs.com";
+            var teamMemberEmail = "tommokky@gcs.com";
             var teamMemberPassword = "Abc123!";
             var teamMemberUser = await userManager.FindByEmailAsync(teamMemberEmail);
 
             if (teamMemberUser == null)
             {
-                teamMemberUser = new IdentityUser
+                teamMemberUser = new AppUser
                 {
                     UserName = teamMemberEmail,
                     Email = teamMemberEmail,
                     EmailConfirmed = true,
+                    FirstName = "Tom"
                 };
 
                 await userManager.CreateAsync(teamMemberUser, teamMemberPassword);
