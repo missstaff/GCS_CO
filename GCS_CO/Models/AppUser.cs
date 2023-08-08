@@ -9,7 +9,18 @@ namespace GCS_CO.Models
 
         public string? LastName { get; set; }
 
-        public string? Email { get; set; }
+        private string _email;
+        public override string Email
+        {
+            get => _email;
+            set
+            {
+                _email = value;
+                NormalizedEmail = value?.ToUpper();
+            }
+        }
+
+        public override string NormalizedEmail { get; set; }
 
         public byte? ProfilePicture { get; set; }
     }
