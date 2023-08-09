@@ -6,6 +6,8 @@
 
 <h1>@ViewBag.Title</h1>
 
+@*TODO:// Add a search filter*@
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,6 +16,12 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -27,6 +35,12 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)

@@ -37,7 +37,7 @@ namespace GCS_CO.Controllers.Admin
             }
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            ViewData["UserRoles"] = userRoles; // Pass the roles to the view
+            ViewBag.UserRoles = userRoles; // Pass the roles to the view
             return View(user);
         }
     }

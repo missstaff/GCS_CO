@@ -38,7 +38,7 @@
             Roles
         </dt>
         <dd class="col-sm-10">
-            @foreach (var role in ViewData["UserRoles"] as IList<string>)
+            @foreach (var role in ViewBag.UserRoles as IList<string>)
             {
                 <span>@role</span>
 
