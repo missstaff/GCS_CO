@@ -98,7 +98,11 @@ namespace GCS_CO.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
+                    await _userManager.AddToRoleAsync(user, "Team Member");
+
                     _logger.LogInformation("User created a new account with password.");
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
