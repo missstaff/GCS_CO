@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230807040023_InitialCreate")]
+    [Migration("20230809041117_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -68,6 +68,7 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -90,6 +91,7 @@ namespace GCS_CO.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 

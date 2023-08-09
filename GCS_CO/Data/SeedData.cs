@@ -91,6 +91,7 @@ namespace GCS_CO.Data
                     Email = adminEmail,
                     EmailConfirmed = true,
                     FirstName = "Admin",
+                    NormalizedEmail = adminEmail,
                 };
 
                 await userManager.CreateAsync(adminUser, adminPassword);
@@ -117,6 +118,7 @@ namespace GCS_CO.Data
                     Email = managerEmail,
                     EmailConfirmed = true,
                     FirstName = "JJ",
+                    NormalizedEmail = managerEmail,
                 };
 
                 await userManager.CreateAsync(managerUser, managerPassword);
@@ -142,7 +144,8 @@ namespace GCS_CO.Data
                     UserName = teamMemberEmail,
                     Email = teamMemberEmail,
                     EmailConfirmed = true,
-                    FirstName = "Tom"
+                    FirstName = "Tom",
+                    NormalizedEmail= teamMemberEmail,
                 };
 
                 await userManager.CreateAsync(teamMemberUser, teamMemberPassword);

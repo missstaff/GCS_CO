@@ -19,6 +19,15 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default User settings.
+    options.User.AllowedUserNameCharacters =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = true;
+
+});
+
 var app = builder.Build();
 
 
