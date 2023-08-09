@@ -51,15 +51,17 @@ namespace GCS_CO.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,DateHired,RegionId,SkillId,AddressId")] AppUser user)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,Username")] AppUser user)
         {
             if (ModelState.IsValid)
             {
+                user.UserName = user.Email;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-          
+            var roles = _context.Roles.Select(r => r.Name).ToList();
+            ViewBag.UserRoles = new SelectList(roles);
             return View(user);
         }
 
@@ -100,6 +102,7 @@ namespace GCS_CO.Controllers.Admin
                 user.LastName = updatedUser.LastName;
                 user.Email = updatedUser.Email;
                 user.PhoneNumber = updatedUser.PhoneNumber;
+
 
                 var currentRoles = await _userManager.GetRolesAsync(user);
                 await _userManager.RemoveFromRolesAsync(user, currentRoles);
