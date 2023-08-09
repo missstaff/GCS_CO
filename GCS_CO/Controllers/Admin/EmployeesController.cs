@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GCS_CO.Data;
 using GCS_CO.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GCS_CO.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -116,8 +116,17 @@ namespace GCS_CO.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {

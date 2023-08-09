@@ -6,7 +6,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
         var user = await UserManager.GetUserAsync(User);
-        var username = user.FirstName ?? User.Identity.Name;
+        var username = user?.FirstName ?? User.Identity?.Name;
 
         if (user != null)
         {
