@@ -51,23 +51,34 @@ namespace GCS_CO.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,Username")] AppUser user, string selectedRole)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,Password")] AppUser user, string selectedRole)
         {
             if (ModelState.IsValid)
             {
                 user.UserName = user.Email;
-                var result = await _userManager.CreateAsync(user);
+                user.EmailConfirmed = true;
+
+                // Create the user
+                var result = await _userManager.CreateAsync(user, user.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, selectedRole);
                     return RedirectToAction(nameof(Index));
                 }
+
+                // If user creation failed, add errors to ModelState
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
+
             var roles = _context.Roles.Select(r => r.Name).ToList();
             var selectListRoles = new SelectList(roles, selectedRole); // Set the selected role
-            ViewBag.UserRoles = selectListRoles; ;
+            ViewBag.UserRoles = selectListRoles;
             return View(user);
         }
+
 
         public async Task<IActionResult> Edit(string? id)
         {

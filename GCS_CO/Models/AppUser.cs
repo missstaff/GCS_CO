@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace GCS_CO.Models
 {
@@ -23,5 +25,12 @@ namespace GCS_CO.Models
         public override string NormalizedEmail { get; set; }
 
         public byte? ProfilePicture { get; set; }
+
+        [NotMapped]
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
     }
 }
