@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GCS_CO.Models.Employee>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Employees";
 }
 
-<h1>Index</h1>
+<h1>@ViewBag.Title</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
