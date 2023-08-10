@@ -14,8 +14,5 @@ namespace GCS_CO.Models
 
         [Required(ErrorMessage = "Postal code is required.")]
         public string PostalCode { get; set; }
-
-        [Required(ErrorMessage = "Country is required.")]
-        public string Country { get; set; }
     }
 }

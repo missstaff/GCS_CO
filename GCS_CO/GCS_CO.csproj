@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Controllers\Admin\AdminController.cs~RFa6b8b4b.TMP" />
     <None Remove="Controllers\Admin\AdminController.cs~RFa71f505.TMP" />
+    <None Remove="Models\Region.cs~RF63bdc0a.TMP" />
     <None Remove="Views\Admin\Index.cshtml~RFaf4f5c3.TMP" />
   </ItemGroup>
 

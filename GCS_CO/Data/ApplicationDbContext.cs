@@ -11,6 +11,14 @@ namespace GCS_CO.Data
             : base(options)
         {}
 
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<State> States { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -51,12 +59,11 @@ namespace GCS_CO.Data
                 entity.ToTable(name: "UserTokens");
             });
 
+            builder.Entity<City>()
+                .HasOne(c => c.State)
+                .WithMany(s => s.Cities)
+                .IsRequired();
         }
 
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Region> Regions { get; set; }
-        public DbSet<Skill> Skills { get; set; }
     }
 }
