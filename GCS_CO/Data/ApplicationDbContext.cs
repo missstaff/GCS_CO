@@ -16,6 +16,7 @@ namespace GCS_CO.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Region> Regions { get; set; }
+        public DbSet<PostalCode> PostalCodes { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<State> States { get; set; }
 

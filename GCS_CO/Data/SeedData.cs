@@ -9,6 +9,7 @@ namespace GCS_CO.Data
             await SeedUsersAndRolesAsync(userManager, roleManager);
             await SeedSkillsAsync(context);
             await SeedRegionsAsync(context);
+            await SeedPostalCodesAsync(context);
             await SeedStatesAsync(context);
             await SeedCitiesAsync(context);
         }
@@ -150,6 +151,49 @@ namespace GCS_CO.Data
             };
 
             await context.Regions.AddRangeAsync(regions);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedPostalCodesAsync(ApplicationDbContext context)
+        {
+            if (context.PostalCodes.Any())
+            {
+                return;
+            }
+
+            var postalCodes = new List<PostalCode>
+            {
+                new PostalCode { Code = "10001", City = "New York City", State = "NY" },
+                new PostalCode { Code = "90001", City = "Los Angeles", State = "CA" },
+                new PostalCode { Code = "60601", City = "Chicago", State = "IL" },
+                new PostalCode { Code = "77001", City = "Houston", State = "TX" },
+                new PostalCode { Code = "85001", City = "Phoenix", State = "AZ" },
+                new PostalCode { Code = "19101", City = "Philadelphia", State = "PA" },
+                new PostalCode { Code = "78201", City = "San Antonio", State = "TX" },
+                new PostalCode { Code = "92101", City = "San Diego", State = "CA" },
+                new PostalCode { Code = "75201", City = "Dallas", State = "TX" },
+                new PostalCode { Code = "21201", City = "Baltimore", State = "MD" },
+                new PostalCode { Code = "53201", City = "Milwaukee", State = "WI" },
+                new PostalCode { Code = "87101", City = "Albuquerque", State = "NM" },
+                new PostalCode { Code = "85701", City = "Tucson", State = "AZ" },
+                new PostalCode { Code = "93701", City = "Fresno", State = "CA" },
+                new PostalCode { Code = "95814", City = "Sacramento", State = "CA" },
+                new PostalCode { Code = "64101", City = "Kansas City", State = "MO" },
+                new PostalCode { Code = "90801", City = "Long Beach", State = "CA" },
+                new PostalCode { Code = "85201", City = "Mesa", State = "AZ" },
+                new PostalCode { Code = "30301", City = "Atlanta", State = "GA" },
+                new PostalCode { Code = "80901", City = "Colorado Springs", State = "CO" },
+                new PostalCode { Code = "27601", City = "Raleigh", State = "NC" },
+                new PostalCode { Code = "33101", City = "Miami", State = "FL" },
+                new PostalCode { Code = "94601", City = "Oakland", State = "CA" },
+                new PostalCode { Code = "55401", City = "Minneapolis", State = "MN" },
+                new PostalCode { Code = "74101", City = "Tulsa", State = "OK" },
+                new PostalCode { Code = "44101", City = "Cleveland", State = "OH" },
+                new PostalCode { Code = "67201", City = "Wichita", State = "KS" },
+                new PostalCode { Code = "76001", City = "Arlington", State = "TX" }
+            };
+
+            await context.PostalCodes.AddRangeAsync(postalCodes);
             await context.SaveChangesAsync();
         }
 

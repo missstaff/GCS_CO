@@ -27,9 +27,9 @@ namespace GCS_CO.Models
         public DateTime DateHired { get; set; }
 
         //// Foreign key to Region table
-        //[Required(ErrorMessage = "Region is required.")]
-        //public int RegionId { get; set; }
-        //public Region Region { get; set; }
+        [Required(ErrorMessage = "Region is required.")]
+        public int RegionId { get; set; }
+        public Region Region { get; set; }
 
         // Foreign key to Skill table
         [Required(ErrorMessage = "Skill is required.")]
