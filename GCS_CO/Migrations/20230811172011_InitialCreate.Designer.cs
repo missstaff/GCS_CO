@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230811004459_InitialCreate")]
+    [Migration("20230811172011_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -132,29 +132,27 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.City", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CityName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RegionAbbreviation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityRegionRegionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("StateAbbreviation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityStateStateId")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CityId");
 
-                    b.HasIndex("RegionAbbreviation");
+                    b.HasIndex("CityRegionRegionId");
 
-                    b.HasIndex("StateAbbreviation");
+                    b.HasIndex("CityStateStateId");
 
                     b.ToTable("Cities", "Identity");
                 });
@@ -186,10 +184,6 @@ namespace GCS_CO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RegionAbbreviation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("RegionId")
                         .HasColumnType("int");
 
@@ -197,7 +191,7 @@ namespace GCS_CO.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("RegionAbbreviation");
+                    b.HasIndex("RegionId");
 
                     b.ToTable("Customers", "Identity");
                 });
@@ -234,10 +228,6 @@ namespace GCS_CO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RegionAbbreviation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("RegionId")
                         .HasColumnType("int");
 
@@ -248,7 +238,7 @@ namespace GCS_CO.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("RegionAbbreviation");
+                    b.HasIndex("RegionId");
 
                     b.HasIndex("SkillId");
 
@@ -282,14 +272,21 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.Region", b =>
                 {
-                    b.Property<string>("Abbreviation")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RegionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RegionId"));
+
+                    b.Property<string>("RegionAbbrev")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Abbreviation");
+                    b.Property<string>("RegionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RegionId");
 
                     b.ToTable("Regions", "Identity");
                 });
@@ -320,19 +317,29 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>
                 {
-                    b.Property<string>("Abbreviation")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"));
+
+                    b.Property<string>("RegionAbbrev")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StateAbbrev")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RegionAbbreviation")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("StateName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Abbreviation");
+                    b.HasKey("StateId");
 
-                    b.HasIndex("RegionAbbreviation");
+                    b.HasIndex("RegionId");
 
                     b.ToTable("States", "Identity");
                 });
@@ -476,21 +483,21 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.City", b =>
                 {
-                    b.HasOne("GCS_CO.Models.Region", "Region")
+                    b.HasOne("GCS_CO.Models.Region", "CityRegion")
                         .WithMany()
-                        .HasForeignKey("RegionAbbreviation")
+                        .HasForeignKey("CityRegionRegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GCS_CO.Models.State", "State")
+                    b.HasOne("GCS_CO.Models.State", "CityState")
                         .WithMany("Cities")
-                        .HasForeignKey("StateAbbreviation")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CityStateStateId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Region");
+                    b.Navigation("CityRegion");
 
-                    b.Navigation("State");
+                    b.Navigation("CityState");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.Customer", b =>
@@ -503,7 +510,7 @@ namespace GCS_CO.Migrations
 
                     b.HasOne("GCS_CO.Models.Region", "Region")
                         .WithMany()
-                        .HasForeignKey("RegionAbbreviation")
+                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -522,7 +529,7 @@ namespace GCS_CO.Migrations
 
                     b.HasOne("GCS_CO.Models.Region", "Region")
                         .WithMany()
-                        .HasForeignKey("RegionAbbreviation")
+                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -542,8 +549,10 @@ namespace GCS_CO.Migrations
             modelBuilder.Entity("GCS_CO.Models.State", b =>
                 {
                     b.HasOne("GCS_CO.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionAbbreviation");
+                        .WithMany("States")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Region");
                 });
@@ -597,6 +606,11 @@ namespace GCS_CO.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.Region", b =>
+                {
+                    b.Navigation("States");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>

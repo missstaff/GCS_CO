@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace GCS_CO.Data
 {
@@ -60,9 +61,17 @@ namespace GCS_CO.Data
                 entity.ToTable(name: "UserTokens");
             });
 
+            builder.Entity<State>()
+                .HasOne(r => r.Region)
+                .WithMany(s => s.States)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+
             builder.Entity<City>()
-                .HasOne(c => c.State)
+                .HasOne(c => c.CityState)
                 .WithMany(s => s.Cities)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }
 

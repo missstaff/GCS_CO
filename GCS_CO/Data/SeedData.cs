@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using GCS_CO.Models;
+using System.Drawing;
+
 namespace GCS_CO.Data
 {
     public static class SeedData
@@ -137,17 +139,17 @@ namespace GCS_CO.Data
                 return;
             }
 
-            var regions = new Region[]
+            var regions = new Models.Region[]
             {
-                new Region { Name = "North", Abbreviation = "N" },
-                new Region { Name = "Northwest", Abbreviation = "NW" },
-                new Region { Name = "Northeast", Abbreviation = "NE" },
-                new Region { Name = "South", Abbreviation = "S" },
-                new Region { Name = "Southwest", Abbreviation = "SW" },
-                new Region { Name = "Southeast", Abbreviation = "SE" },
-                new Region { Name = "West", Abbreviation = "W" },
-                new Region { Name = "Midwest", Abbreviation = "MW" },
-                new Region { Name = "East", Abbreviation = "E" },
+                new Models.Region { RegionName = "North", RegionAbbrev = "N" },
+                new Models.Region { RegionName = "Northwest", RegionAbbrev = "NW" },
+                new Models.Region { RegionName = "Northeast", RegionAbbrev = "NE" },
+                new Models.Region { RegionName = "South", RegionAbbrev = "S" },
+                new Models.Region { RegionName = "Southwest", RegionAbbrev = "SW" },
+                new Models.Region { RegionName = "Southeast", RegionAbbrev = "SE" },
+                new Models.Region { RegionName = "West", RegionAbbrev = "W" },
+                new Models.Region { RegionName = "Midwest", RegionAbbrev = "MW" },
+                new Models.Region { RegionName = "East", RegionAbbrev = "E" },
             };
 
             await context.Regions.AddRangeAsync(regions);
@@ -203,58 +205,69 @@ namespace GCS_CO.Data
             {
                 return;
             }
+            var south = context.Regions.Single(r => r.RegionAbbrev == "S");
+            var southWest = context.Regions.Single(r => r.RegionAbbrev == "SW");
+            var southEast = context.Regions.Single(r => r.RegionAbbrev == "SE");
+            var north = context.Regions.Single(r => r.RegionAbbrev == "N");
+            var northEast = context.Regions.Single(r => r.RegionAbbrev == "NE");
+            var northWest = context.Regions.Single(r => r.RegionAbbrev == "NW");
+            var east = context.Regions.Single(r => r.RegionAbbrev == "E");
+            var west = context.Regions.Single(r => r.RegionAbbrev == "W");
+            var midWest = context.Regions.Single(r => r.RegionAbbrev == "MW");
             var states = new List<State>
             {
-                new State { Name = "Alabama", Abbreviation = "AL", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Alaska", Abbreviation = "AK", Region = context.Regions.Single(r => r.Abbreviation == "NW") },
-                new State { Name = "Arizona", Abbreviation = "AZ", Region = context.Regions.Single(r => r.Abbreviation == "SW") },
-                new State { Name = "Arkansas", Abbreviation = "AR", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "California", Abbreviation = "CA", Region = context.Regions.Single(r => r.Abbreviation == "W") },
-                new State { Name = "Colorado", Abbreviation = "CO", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Connecticut", Abbreviation = "CT", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Delaware", Abbreviation = "DE", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Florida", Abbreviation = "FL", Region = context.Regions.Single(r => r.Abbreviation == "SE") },
-                new State { Name = "Georgia", Abbreviation = "GA", Region = context.Regions.Single(r => r.Abbreviation == "SE") },
-                new State { Name = "Hawaii", Abbreviation = "HI", Region = context.Regions.Single(r => r.Abbreviation == "W") },
-                new State { Name = "Idaho", Abbreviation = "ID", Region = context.Regions.Single(r => r.Abbreviation == "NW") },
-                new State { Name = "Illinois", Abbreviation = "IL", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Indiana", Abbreviation = "IN", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Iowa", Abbreviation = "IA", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Kansas", Abbreviation = "KS", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Kentucky", Abbreviation = "KY", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Louisiana", Abbreviation = "LA", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Maine", Abbreviation = "ME", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Maryland", Abbreviation = "MD", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Massachusetts", Abbreviation = "MA", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Michigan", Abbreviation = "MI", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Minnesota", Abbreviation = "MN", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Mississippi", Abbreviation = "MS", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Missouri", Abbreviation = "MO", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Montana", Abbreviation = "MT", Region = context.Regions.Single(r => r.Abbreviation == "NW") },
-                new State { Name = "Nebraska", Abbreviation = "NE", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Nevada", Abbreviation = "NV", Region = context.Regions.Single(r => r.Abbreviation == "W") },
-                new State { Name = "New Hampshire", Abbreviation = "NH", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "New Jersey", Abbreviation = "NJ", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "New Mexico", Abbreviation = "NM", Region = context.Regions.Single(r => r.Abbreviation == "SW") },
-                new State { Name = "New York", Abbreviation = "NY", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "North Carolina", Abbreviation = "NC", Region = context.Regions.Single(r => r.Abbreviation == "SE") },
-                new State { Name = "North Dakota", Abbreviation = "ND", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Ohio", Abbreviation = "OH", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Oklahoma", Abbreviation = "OK", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Oregon", Abbreviation = "OR", Region = context.Regions.Single(r => r.Abbreviation == "W") },
-                new State { Name = "Pennsylvania", Abbreviation = "PA", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Rhode Island", Abbreviation = "RI", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "South Carolina", Abbreviation = "SC", Region = context.Regions.Single(r => r.Abbreviation == "SE") },
-                new State { Name = "South Dakota", Abbreviation = "SD", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Tennessee", Abbreviation = "TN", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Texas", Abbreviation = "TX", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Utah", Abbreviation = "UT", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Vermont", Abbreviation = "VT", Region = context.Regions.Single(r => r.Abbreviation == "NE") },
-                new State { Name = "Virginia", Abbreviation = "VA", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Washington", Abbreviation = "WA", Region = context.Regions.Single(r => r.Abbreviation == "NW") },
-                new State { Name = "West Virginia", Abbreviation = "WV", Region = context.Regions.Single(r => r.Abbreviation == "S") },
-                new State { Name = "Wisconsin", Abbreviation = "WI", Region = context.Regions.Single(r => r.Abbreviation == "MW") },
-                new State { Name = "Wyoming", Abbreviation = "WY", Region = context.Regions.Single(r => r.Abbreviation == "W") }
+
+                new State { StateName = "Alabama", StateAbbrev = "AL", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Alaska", StateAbbrev = "AK", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "Arizona", StateAbbrev = "AZ", Region = southWest, RegionAbbrev = southWest.RegionAbbrev },
+                new State { StateName = "Arkansas", StateAbbrev = "AR", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "California", StateAbbrev = "CA", Region = west, RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Colorado", StateAbbrev = "CO", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Connecticut", StateAbbrev = "CT", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Delaware", StateAbbrev = "DE", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Florida", StateAbbrev = "FL", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "Georgia", StateAbbrev = "GA", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "Hawaii", StateAbbrev = "HI", Region = west, RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Idaho", StateAbbrev = "ID", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "Illinois", StateAbbrev = "IL", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Indiana", StateAbbrev = "IN", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Iowa", StateAbbrev = "IA", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Kansas", StateAbbrev = "KS", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Kentucky", StateAbbrev = "KY", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Louisiana", StateAbbrev = "LA", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Maine", StateAbbrev = "ME", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Maryland", StateAbbrev = "MD", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Massachusetts", StateAbbrev = "MA", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Michigan", StateAbbrev = "MI", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Minnesota", StateAbbrev = "MN", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Mississippi", StateAbbrev = "MS", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Missouri", StateAbbrev = "MO", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Montana", StateAbbrev = "MT", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "Nebraska", StateAbbrev = "NE", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Nevada", StateAbbrev = "NV", Region = west, RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "New Hampshire", StateAbbrev = "NH", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "New Jersey", StateAbbrev = "NJ", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "New Mexico", StateAbbrev = "NM", Region = southWest, RegionAbbrev = southWest.RegionAbbrev },
+                new State { StateName = "New York", StateAbbrev = "NY", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "North Carolina", StateAbbrev = "NC", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "North Dakota", StateAbbrev = "ND", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Ohio", StateAbbrev = "OH", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Oklahoma", StateAbbrev = "OK", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Oregon", StateAbbrev = "OR", Region = west, RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Pennsylvania", StateAbbrev = "PA", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Rhode Island", StateAbbrev = "RI", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "South Carolina", StateAbbrev = "SC", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "South Dakota", StateAbbrev = "SD", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Tennessee", StateAbbrev = "TN", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Texas", StateAbbrev = "TX", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Utah", StateAbbrev = "UT", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Vermont", StateAbbrev = "VT", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Virginia", StateAbbrev = "VA", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Washington", StateAbbrev = "WA", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "West Virginia", StateAbbrev = "WV", Region = south, RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Wisconsin", StateAbbrev = "WI", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Wyoming", StateAbbrev = "WY", Region = west, RegionAbbrev = west.RegionAbbrev },
+
 
             };
 
@@ -272,42 +285,41 @@ namespace GCS_CO.Data
             var cities = new List<City>
             {
 
-
-                new City { Name = "New York City", State = context.States.FirstOrDefault(s => s.Abbreviation == "NY") ?? new State { Abbreviation = "NY", Name = "New York" } },
-                new City { Name = "Los Angeles", State = context.States.FirstOrDefault(s => s.Abbreviation == "CA") ?? new State { Abbreviation = "CA", Name = "California" } },
-                new City { Name = "Chicago", State = context.States.FirstOrDefault(s => s.Abbreviation == "IL") ?? new State { Abbreviation = "IL", Name = "Illinois" } },
-                new City { Name = "Houston", State = context.States.FirstOrDefault(s => s.Abbreviation == "TX") ?? new State { Abbreviation = "TX", Name = "Texas" } },
-                new City { Name = "Phoenix", State = context.States.FirstOrDefault(s => s.Abbreviation == "AZ") ?? new State { Abbreviation = "AZ", Name = "Arizona" } },
-                new City { Name = "Philadelphia", State = context.States.FirstOrDefault(s => s.Abbreviation == "PA") ?? new State { Abbreviation = "PA", Name = "Pennsylvania" } },
-                new City { Name = "San Antonio", State = context.States.FirstOrDefault(s => s.Abbreviation == "TX") ?? new State { Abbreviation = "TX", Name = "Texas" } },
-                new City { Name = "San Diego", State = context.States.FirstOrDefault(s => s.Abbreviation == "CA") ?? new State { Abbreviation = "CA", Name = "California" } },
-                new City { Name = "Dallas", State = context.States.FirstOrDefault(s => s.Abbreviation == "TX") ?? new State { Abbreviation = "TX", Name = "Texas" } },
-                new City { Name = "Baltimore", State = context.States.FirstOrDefault(s => s.Abbreviation == "MD") ?? new State { Abbreviation = "MD", Name = "Maryland" } },
-                new City { Name = "Milwaukee", State = context.States.FirstOrDefault(s => s.Abbreviation == "WI") ?? new State { Abbreviation = "WI", Name = "Wisconsin" } },
-                new City { Name = "Albuquerque", State = context.States.FirstOrDefault(s => s.Abbreviation == "NM") ?? new State { Abbreviation = "NM", Name = "New Mexico" } },
-                new City { Name = "Tucson", State = context.States.FirstOrDefault(s => s.Abbreviation == "AZ") ?? new State { Abbreviation = "AZ", Name = "Arizona" } },
-                new City { Name = "Fresno", State = context.States.FirstOrDefault(s => s.Abbreviation == "CA") ?? new State { Abbreviation = "CA", Name = "California" } },
-                new City { Name = "Sacramento", State = context.States.FirstOrDefault(s => s.Abbreviation == "CA") ?? new State { Abbreviation = "CA", Name = "California" } },
-                new City { Name = "Kansas City", State = context.States.FirstOrDefault(s => s.Abbreviation == "MO") ?? new State { Abbreviation = "MO", Name = "Missouri" } },
-                new City { Name = "Long Beach", State = context.States.FirstOrDefault(s => s.Abbreviation == "CA") ?? new State { Abbreviation = "CA", Name = "California" } },
-                new City { Name = "Mesa", State = context.States.FirstOrDefault(s => s.Abbreviation == "AZ") ?? new State { Abbreviation = "AZ", Name = "Arizona" } },
-                new City { Name = "Atlanta", State = context.States.FirstOrDefault(s => s.Abbreviation == "GA") ?? new State { Abbreviation = "GA", Name = "Georgia" } },
-                new City { Name = "Colorado Springs", State = context.States.FirstOrDefault(s => s.Abbreviation == "CO") ?? new State { Abbreviation = "CO", Name = "Colorado" } },
-                new City { Name = "Raleigh", State = context.States.FirstOrDefault(s => s.Abbreviation == "NC") ?? new State { Abbreviation = "NC", Name = "North Carolina" } },
-                new City { Name = "Miami", State = context.States.FirstOrDefault(s => s.Abbreviation == "FL") ?? new State { Abbreviation = "FL", Name = "Florida" } },
-                new City { Name = "Oakland", State = context.States.FirstOrDefault(s => s.Abbreviation == "CA") ?? new State { Abbreviation = "CA", Name = "California" } },
-                new City { Name = "Minneapolis", State = context.States.FirstOrDefault(s => s.Abbreviation == "MN") ?? new State { Abbreviation = "MN", Name = "Minnesota" } },
-                new City { Name = "Tulsa", State = context.States.FirstOrDefault(s => s.Abbreviation == "OK") ?? new State { Abbreviation = "OK", Name = "Oklahoma" } },
-                new City { Name = "Cleveland", State = context.States.FirstOrDefault(s => s.Abbreviation == "OH") ?? new State { Abbreviation = "OH", Name = "Ohio" } },
-                new City { Name = "Wichita", State = context.States.FirstOrDefault(s => s.Abbreviation == "KS") ?? new State { Abbreviation = "KS", Name = "Kansas" } },
-                new City { Name = "Arlington", State = context.States.FirstOrDefault(s => s.Abbreviation == "TX") ?? new State { Abbreviation = "TX", Name = "Texas" } }
+                //new City { CityName = "New York City", CityState = context.States.FirstOrDefault(s => s.StateAbbrev == "NY") ?? new State { StateAbbrev = "NY", StateName = "New York" }, CityRegion = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.StateRegion },
+                //new City { Name = "Los Angeles", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+                //new City { Name = "Chicago", State = context.States.FirstOrDefault(s => s.StateAbbrev == "IL") ?? new State { StateAbbrev = "IL", StateName = "Illinois" } },
+                //new City { Name = "Houston", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
+                //new City { Name = "Phoenix", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
+                //new City { Name = "Philadelphia", State = context.States.FirstOrDefault(s => s.StateAbbrev == "PA") ?? new State { StateAbbrev = "PA", StateName = "Pennsylvania" } },
+                //new City { Name = "San Antonio", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
+                //new City { Name = "San Diego", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+                //new City { Name = "Dallas", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
+                //new City { Name = "Baltimore", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MD") ?? new State { StateAbbrev = "MD", StateName = "Maryland" } },
+                //new City { Name = "Milwaukee", State = context.States.FirstOrDefault(s => s.StateAbbrev == "WI") ?? new State { StateAbbrev = "WI", StateName = "Wisconsin" } },
+                //new City { Name = "Albuquerque", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NM") ?? new State { StateAbbrev = "NM", StateName = "New Mexico" } },
+                //new City { Name = "Tucson", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
+                //new City { Name = "Fresno", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+                //new City { Name = "Sacramento", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+                //new City { Name = "Kansas City", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MO") ?? new State { StateAbbrev = "MO", StateName = "Missouri" } },
+                //new City { Name = "Long Beach", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+                //new City { Name = "Mesa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
+                //new City { Name = "Atlanta", State = context.States.FirstOrDefault(s => s.StateAbbrev == "GA") ?? new State { StateAbbrev = "GA", StateName = "Georgia" } },
+                //new City { Name = "Colorado Springs", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CO") ?? new State { StateAbbrev = "CO", StateName = "Colorado" } },
+                //new City { Name = "Raleigh", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NC") ?? new State { StateAbbrev = "NC", StateName = "North Carolina" } },
+                //new City { Name = "Miami", State = context.States.FirstOrDefault(s => s.StateAbbrev == "FL") ?? new State { StateAbbrev = "FL", StateName = "Florida" } },
+                //new City { Name = "Oakland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+                //new City { Name = "Minneapolis", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MN") ?? new State { StateAbbrev = "MN", StateName = "Minnesota" } },
+                //new City { Name = "Tulsa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OK") ?? new State { StateAbbrev = "OK", StateName = "Oklahoma" } },
+                //new City { Name = "Cleveland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OH") ?? new State { StateAbbrev = "OH", StateName = "Ohio" } },
+                //new City { Name = "Wichita", State = context.States.FirstOrDefault(s => s.StateAbbrev == "KS") ?? new State { StateAbbrev = "KS", StateName = "Kansas" } },
+                //new City { Name = "Arlington", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } }
 
             };
 
-            foreach (var city in cities)
-            {
-                city.Region = city.State.Region;
-            }
+            //foreach (var city in cities)
+            //{
+            //    city.Region = city.State.StateRegion;
+            //}
 
             await context.Cities.AddRangeAsync(cities);
             await context.SaveChangesAsync();

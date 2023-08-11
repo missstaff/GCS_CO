@@ -1,13 +1,14 @@
-﻿namespace GCS_CO.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GCS_CO.Models
 {
     public class City
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        // Navigation property for the State
-        public required State State { get; set; }
-        public Region Region { get; set; }
+        [Key]
+        public int CityId { get; set; }
+        public required string CityName { get; set; }
+        public required State CityState { get; set; }
+        public required Region CityRegion { get; set; }
 
     }
 }
