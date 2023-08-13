@@ -66,18 +66,17 @@ namespace GCS_CO.Data
                 entity.ToTable(name: "UserTokens");
             });
 
-            //builder.Entity<Region>()
-            // .HasMany(r => r.States)  // A Region can have many States
-            // .WithOne(s => s.Region)  // A State belongs to one Region
-            // .OnDelete(DeleteBehavior.NoAction)  // Specify the desired delete behavior
-            // .IsRequired();  // Define the relationship as required
+            builder.Entity<Region>()
+              .HasKey(r => r.RegionId);  // Define primary key for the Region entity
 
+            builder.Entity<Region>()
+                .HasMany(r => r.States)  // A region can have multiple states
+                .WithOne(s => s.Region)  // Each state belongs to a region
+                .HasPrincipalKey(r => r.RegionAbbrev)
+                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
-            //builder.Entity<State>()
-            //    .HasOne(s => s.Region)
-            //    .WithMany(s => s.States)
-            //    .OnDelete(DeleteBehavior.NoAction)
-            //    .IsRequired();
 
             builder.Entity<State>()
                 .HasKey(s => s.StateId);  // Define primary key for the State entity
@@ -89,23 +88,25 @@ namespace GCS_CO.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
-            builder.Entity<Region>()
-                .HasKey(r => r.RegionId);  // Define primary key for the Region entity
-
-            builder.Entity<Region>()
-                .HasMany(r => r.States)  // A region can have multiple states
-                .WithOne(s => s.Region)  // Each state belongs to a region
-                .HasPrincipalKey(r => r.RegionAbbrev)
-                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+            builder.Entity<State>()
+               .HasMany(c => c.Cities) // A state can have multiple cities
+               .WithOne(s => s.State) // Each city belongs to a state
+               .HasPrincipalKey(s => s.StateAbbrev)
+               .HasForeignKey(s => s.StateAbbrev)
+               .OnDelete(DeleteBehavior.NoAction)
+               .IsRequired();
 
 
             builder.Entity<City>()
-                .HasOne(c => c.CityState)
-                .WithMany(s => s.Cities)
+                .HasKey(c => c.CityId);  // Define primary key for the City entity
+
+            builder.Entity<City>()
+                .HasOne(c => c.State)  // Each city belongs to a state
+                .WithMany(s => s.Cities)  // A state can have multiple cities
+                .HasForeignKey(c => c.StateAbbrev)  // Use StateAbbrev as the foreign key
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
+   
         }
 
     }

@@ -163,13 +163,14 @@ namespace GCS_CO.Migrations
                 {
                     StateId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StateAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_States", x => x.StateId);
+                    table.UniqueConstraint("AK_States_StateAbbrev", x => x.StateAbbrev);
                     table.ForeignKey(
                         name: "FK_States_Regions_RegionAbbrev",
                         column: x => x.RegionAbbrev,
@@ -345,38 +346,25 @@ namespace GCS_CO.Migrations
                     CityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityStateStateId = table.Column<int>(type: "int", nullable: false),
-                    CityRegionRegionId = table.Column<int>(type: "int", nullable: false)
+                    StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.CityId);
                     table.ForeignKey(
-                        name: "FK_Cities_Regions_CityRegionRegionId",
-                        column: x => x.CityRegionRegionId,
-                        principalSchema: "Identity",
-                        principalTable: "Regions",
-                        principalColumn: "RegionId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Cities_States_CityStateStateId",
-                        column: x => x.CityStateStateId,
+                        name: "FK_Cities_States_StateAbbrev",
+                        column: x => x.StateAbbrev,
                         principalSchema: "Identity",
                         principalTable: "States",
-                        principalColumn: "StateId");
+                        principalColumn: "StateAbbrev");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_CityRegionRegionId",
+                name: "IX_Cities_StateAbbrev",
                 schema: "Identity",
                 table: "Cities",
-                column: "CityRegionRegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cities_CityStateStateId",
-                schema: "Identity",
-                table: "Cities",
-                column: "CityStateStateId");
+                column: "StateAbbrev");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_AddressId",
