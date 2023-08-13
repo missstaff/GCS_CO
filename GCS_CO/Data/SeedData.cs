@@ -285,7 +285,7 @@ namespace GCS_CO.Data
             }
 
             var cities = new List<City>
-{
+            { 
             new City
             {
                 CityName = "New York City",
@@ -293,41 +293,169 @@ namespace GCS_CO.Data
                 RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.RegionAbbrev,
 
             },
-            //new City { CityName = "New York City", CityState = context.States.FirstOrDefault(s => s.StateAbbrev == "NY") ?? new State { StateAbbrev = "NY", StateName = "New York" }, CityRegion = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.StateRegion },
-            //new City { Name = "Los Angeles", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-            //new City { Name = "Chicago", State = context.States.FirstOrDefault(s => s.StateAbbrev == "IL") ?? new State { StateAbbrev = "IL", StateName = "Illinois" } },
-            //new City { Name = "Houston", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
-            //new City { Name = "Phoenix", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
-            //new City { Name = "Philadelphia", State = context.States.FirstOrDefault(s => s.StateAbbrev == "PA") ?? new State { StateAbbrev = "PA", StateName = "Pennsylvania" } },
-            //new City { Name = "San Antonio", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
-            //new City { Name = "San Diego", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-            //new City { Name = "Dallas", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
-            //new City { Name = "Baltimore", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MD") ?? new State { StateAbbrev = "MD", StateName = "Maryland" } },
-            //new City { Name = "Milwaukee", State = context.States.FirstOrDefault(s => s.StateAbbrev == "WI") ?? new State { StateAbbrev = "WI", StateName = "Wisconsin" } },
-            //new City { Name = "Albuquerque", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NM") ?? new State { StateAbbrev = "NM", StateName = "New Mexico" } },
-            //new City { Name = "Tucson", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
-            //new City { Name = "Fresno", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-            //new City { Name = "Sacramento", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-            //new City { Name = "Kansas City", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MO") ?? new State { StateAbbrev = "MO", StateName = "Missouri" } },
-            //new City { Name = "Long Beach", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-            //new City { Name = "Mesa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
-            //new City { Name = "Atlanta", State = context.States.FirstOrDefault(s => s.StateAbbrev == "GA") ?? new State { StateAbbrev = "GA", StateName = "Georgia" } },
-            //new City { Name = "Colorado Springs", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CO") ?? new State { StateAbbrev = "CO", StateName = "Colorado" } },
-            //new City { Name = "Raleigh", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NC") ?? new State { StateAbbrev = "NC", StateName = "North Carolina" } },
-            //new City { Name = "Miami", State = context.States.FirstOrDefault(s => s.StateAbbrev == "FL") ?? new State { StateAbbrev = "FL", StateName = "Florida" } },
-            //new City { Name = "Oakland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-            //new City { Name = "Minneapolis", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MN") ?? new State { StateAbbrev = "MN", StateName = "Minnesota" } },
-            //new City { Name = "Tulsa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OK") ?? new State { StateAbbrev = "OK", StateName = "Oklahoma" } },
-            //new City { Name = "Cleveland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OH") ?? new State { StateAbbrev = "OH", StateName = "Ohio" } },
-            //new City { Name = "Wichita", State = context.States.FirstOrDefault(s => s.StateAbbrev == "KS") ?? new State { StateAbbrev = "KS", StateName = "Kansas" } },
-            //new City { Name = "Arlington", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } }
-
+            new City
+            {
+                CityName = "Los Angeles",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Chicago",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "IL")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "IL")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Houston",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.RegionAbbrev,
+            },
+                new City
+            {
+                CityName = "Phoenix",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Philadelphia",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "PA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "PA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "San Antonio",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "San Diego",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Dallas",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Baltimore",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "MD")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "MD")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Milwaukee",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "WI")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "WI")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Albuquerque",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NM")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NM")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Tucson",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Fresno",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Sacramento",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Kansas City",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "MO")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "MO")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Long Beach",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Mesa",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Atlanta",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "GA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "GA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Colorado Springs",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CO")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CO")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Raleigh",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NC")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NC")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Miami",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "FL")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "FL")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Oakland",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "CA")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Minneapolis",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "MN")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "MN")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Tulsa",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "OK")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "OK")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Cleveland",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "OH")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "OH")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Wichita",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "KS")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "KS")?.RegionAbbrev,
+            },
+            new City
+            {
+                CityName = "Arlington",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "TX")?.RegionAbbrev,
+            },
         };
-
-            //foreach (var city in cities)
-            //{
-            //    city.Region = city.State.StateRegion;
-            //}
 
             await context.Cities.AddRangeAsync(cities);
             await context.SaveChangesAsync();

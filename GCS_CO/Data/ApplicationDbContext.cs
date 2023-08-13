@@ -66,6 +66,17 @@ namespace GCS_CO.Data
                 entity.ToTable(name: "UserTokens");
             });
 
+            builder.Entity<Region>()
+              .HasKey(r => r.RegionId);  // Define primary key for the Region entity
+
+            builder.Entity<Region>()
+                .HasMany(r => r.States)  // A region can have multiple states
+                .WithOne(s => s.Region)  // Each state belongs to a region
+                .HasPrincipalKey(r => r.RegionAbbrev)
+                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
 
             builder.Entity<State>()
                 .HasKey(s => s.StateId);  // Define primary key for the State entity
@@ -77,16 +88,14 @@ namespace GCS_CO.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
-            builder.Entity<Region>()
-                .HasKey(r => r.RegionId);  // Define primary key for the Region entity
+            builder.Entity<State>()
+               .HasMany(c => c.Cities) // A state can have multiple cities
+               .WithOne(s => s.State) // Each city belongs to a state
+               .HasPrincipalKey(s => s.StateAbbrev)
+               .HasForeignKey(s => s.StateAbbrev)
+               .OnDelete(DeleteBehavior.NoAction)
+               .IsRequired();
 
-            builder.Entity<Region>()
-                .HasMany(r => r.States)  // A region can have multiple states
-                .WithOne(s => s.Region)  // Each state belongs to a region
-                .HasPrincipalKey(r => r.RegionAbbrev)
-                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
 
             builder.Entity<City>()
                 .HasKey(c => c.CityId);  // Define primary key for the City entity
@@ -97,15 +106,8 @@ namespace GCS_CO.Data
                 .HasForeignKey(c => c.StateAbbrev)  // Use StateAbbrev as the foreign key
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-
-            builder.Entity<State>()
-                .HasMany(c => c.Cities)
-                .WithOne(s => s.State)
-                .HasPrincipalKey(s => s.StateAbbrev)
-                .HasForeignKey(s => s.StateAbbrev)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
-       }
+   
+        }
 
     }
 }
