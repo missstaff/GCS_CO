@@ -53,12 +53,13 @@ namespace GCS_CO.Migrations
                 {
                     RegionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RegionName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Regions", x => x.RegionId);
+                    table.UniqueConstraint("AK_Regions_RegionAbbrev", x => x.RegionAbbrev);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,18 +165,17 @@ namespace GCS_CO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StateAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StateName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegionId = table.Column<int>(type: "int", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_States", x => x.StateId);
                     table.ForeignKey(
-                        name: "FK_States_Regions_RegionId",
-                        column: x => x.RegionId,
+                        name: "FK_States_Regions_RegionAbbrev",
+                        column: x => x.RegionAbbrev,
                         principalSchema: "Identity",
                         principalTable: "Regions",
-                        principalColumn: "RegionId");
+                        principalColumn: "RegionAbbrev");
                 });
 
             migrationBuilder.CreateTable(
@@ -423,10 +423,10 @@ namespace GCS_CO.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_States_RegionId",
+                name: "IX_States_RegionAbbrev",
                 schema: "Identity",
                 table: "States",
-                column: "RegionId");
+                column: "RegionAbbrev");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",

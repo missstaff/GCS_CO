@@ -101,7 +101,7 @@ namespace GCS_CO.Data
                 return;
             }
 
-            var skills = new Skill[]
+            var skills = new List<Skill>
             {
                 new Skill { Name = "Data Entry 1", Description = "Data Entry 1", RateOfPay = 50 },
                 new Skill { Name = "Data Entry 2", Description = "Data Entry 2", RateOfPay = 75 },
@@ -139,7 +139,7 @@ namespace GCS_CO.Data
                 return;
             }
 
-            var regions = new Models.Region[]
+            var regions = new List<Models.Region>
             {
                 new Models.Region { RegionName = "North", RegionAbbrev = "N" },
                 new Models.Region { RegionName = "Northwest", RegionAbbrev = "NW" },
@@ -205,6 +205,7 @@ namespace GCS_CO.Data
             {
                 return;
             }
+
             var south = context.Regions.Single(r => r.RegionAbbrev == "S");
             var southWest = context.Regions.Single(r => r.RegionAbbrev == "SW");
             var southEast = context.Regions.Single(r => r.RegionAbbrev == "SE");
@@ -214,59 +215,61 @@ namespace GCS_CO.Data
             var east = context.Regions.Single(r => r.RegionAbbrev == "E");
             var west = context.Regions.Single(r => r.RegionAbbrev == "W");
             var midWest = context.Regions.Single(r => r.RegionAbbrev == "MW");
+
+
             var states = new List<State>
             {
 
-                new State { StateName = "Alabama", StateAbbrev = "AL", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Alaska", StateAbbrev = "AK", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
-                new State { StateName = "Arizona", StateAbbrev = "AZ", Region = southWest, RegionAbbrev = southWest.RegionAbbrev },
-                new State { StateName = "Arkansas", StateAbbrev = "AR", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "California", StateAbbrev = "CA", Region = west, RegionAbbrev = west.RegionAbbrev },
-                new State { StateName = "Colorado", StateAbbrev = "CO", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Connecticut", StateAbbrev = "CT", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Delaware", StateAbbrev = "DE", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Florida", StateAbbrev = "FL", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
-                new State { StateName = "Georgia", StateAbbrev = "GA", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
-                new State { StateName = "Hawaii", StateAbbrev = "HI", Region = west, RegionAbbrev = west.RegionAbbrev },
-                new State { StateName = "Idaho", StateAbbrev = "ID", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
-                new State { StateName = "Illinois", StateAbbrev = "IL", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Indiana", StateAbbrev = "IN", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Iowa", StateAbbrev = "IA", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Kansas", StateAbbrev = "KS", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Kentucky", StateAbbrev = "KY", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Louisiana", StateAbbrev = "LA", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Maine", StateAbbrev = "ME", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Maryland", StateAbbrev = "MD", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Massachusetts", StateAbbrev = "MA", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Michigan", StateAbbrev = "MI", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Minnesota", StateAbbrev = "MN", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Mississippi", StateAbbrev = "MS", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Missouri", StateAbbrev = "MO", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Montana", StateAbbrev = "MT", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
-                new State { StateName = "Nebraska", StateAbbrev = "NE", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Nevada", StateAbbrev = "NV", Region = west, RegionAbbrev = west.RegionAbbrev },
-                new State { StateName = "New Hampshire", StateAbbrev = "NH", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "New Jersey", StateAbbrev = "NJ", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "New Mexico", StateAbbrev = "NM", Region = southWest, RegionAbbrev = southWest.RegionAbbrev },
-                new State { StateName = "New York", StateAbbrev = "NY", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "North Carolina", StateAbbrev = "NC", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
-                new State { StateName = "North Dakota", StateAbbrev = "ND", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Ohio", StateAbbrev = "OH", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Oklahoma", StateAbbrev = "OK", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Oregon", StateAbbrev = "OR", Region = west, RegionAbbrev = west.RegionAbbrev },
-                new State { StateName = "Pennsylvania", StateAbbrev = "PA", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Rhode Island", StateAbbrev = "RI", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "South Carolina", StateAbbrev = "SC", Region = southEast, RegionAbbrev = southEast.RegionAbbrev },
-                new State { StateName = "South Dakota", StateAbbrev = "SD", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Tennessee", StateAbbrev = "TN", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Texas", StateAbbrev = "TX", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Utah", StateAbbrev = "UT", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Vermont", StateAbbrev = "VT", Region = northEast, RegionAbbrev = northEast.RegionAbbrev },
-                new State { StateName = "Virginia", StateAbbrev = "VA", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Washington", StateAbbrev = "WA", Region = northWest, RegionAbbrev = northWest.RegionAbbrev },
-                new State { StateName = "West Virginia", StateAbbrev = "WV", Region = south, RegionAbbrev = south.RegionAbbrev },
-                new State { StateName = "Wisconsin", StateAbbrev = "WI", Region = midWest, RegionAbbrev = midWest.RegionAbbrev },
-                new State { StateName = "Wyoming", StateAbbrev = "WY", Region = west, RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Alabama", StateAbbrev = "AL", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Alaska", StateAbbrev = "AK", RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "Arizona", StateAbbrev = "AZ", RegionAbbrev = southWest.RegionAbbrev },
+                new State { StateName = "Arkansas", StateAbbrev = "AR", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "California", StateAbbrev = "CA", RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Colorado", StateAbbrev = "CO", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Connecticut", StateAbbrev = "CT", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Delaware", StateAbbrev = "DE", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Florida", StateAbbrev = "FL", RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "Georgia", StateAbbrev = "GA", RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "Hawaii", StateAbbrev = "HI", RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Idaho", StateAbbrev = "ID", RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "Illinois", StateAbbrev = "IL", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Indiana", StateAbbrev = "IN", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Iowa", StateAbbrev = "IA", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Kansas", StateAbbrev = "KS", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Kentucky", StateAbbrev = "KY", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Louisiana", StateAbbrev = "LA", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Maine", StateAbbrev = "ME", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Maryland", StateAbbrev = "MD", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Massachusetts", StateAbbrev = "MA", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Michigan", StateAbbrev = "MI", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Minnesota", StateAbbrev = "MN", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Mississippi", StateAbbrev = "MS", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Missouri", StateAbbrev = "MO", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Montana", StateAbbrev = "MT", RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "Nebraska", StateAbbrev = "NE", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Nevada", StateAbbrev = "NV", RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "New Hampshire", StateAbbrev = "NH", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "New Jersey", StateAbbrev = "NJ", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "New Mexico", StateAbbrev = "NM", RegionAbbrev = southWest.RegionAbbrev },
+                new State { StateName = "New York", StateAbbrev = "NY", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "North Carolina", StateAbbrev = "NC", RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "North Dakota", StateAbbrev = "ND", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Ohio", StateAbbrev = "OH", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Oklahoma", StateAbbrev = "OK", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Oregon", StateAbbrev = "OR", RegionAbbrev = west.RegionAbbrev },
+                new State { StateName = "Pennsylvania", StateAbbrev = "PA", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Rhode Island", StateAbbrev = "RI", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "South Carolina", StateAbbrev = "SC", RegionAbbrev = southEast.RegionAbbrev },
+                new State { StateName = "South Dakota", StateAbbrev = "SD", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Tennessee", StateAbbrev = "TN", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Texas", StateAbbrev = "TX", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Utah", StateAbbrev = "UT", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Vermont", StateAbbrev = "VT", RegionAbbrev = northEast.RegionAbbrev },
+                new State { StateName = "Virginia", StateAbbrev = "VA", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Washington", StateAbbrev = "WA", RegionAbbrev = northWest.RegionAbbrev },
+                new State { StateName = "West Virginia", StateAbbrev = "WV", RegionAbbrev = south.RegionAbbrev },
+                new State { StateName = "Wisconsin", StateAbbrev = "WI", RegionAbbrev = midWest.RegionAbbrev },
+                new State { StateName = "Wyoming", StateAbbrev = "WY", RegionAbbrev = west.RegionAbbrev },
 
 
             };

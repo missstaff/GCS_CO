@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230811172011_InitialCreate")]
+    [Migration("20230813171228_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -280,7 +280,7 @@ namespace GCS_CO.Migrations
 
                     b.Property<string>("RegionAbbrev")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RegionName")
                         .IsRequired()
@@ -324,10 +324,8 @@ namespace GCS_CO.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"));
 
                     b.Property<string>("RegionAbbrev")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StateAbbrev")
                         .IsRequired()
@@ -339,7 +337,7 @@ namespace GCS_CO.Migrations
 
                     b.HasKey("StateId");
 
-                    b.HasIndex("RegionId");
+                    b.HasIndex("RegionAbbrev");
 
                     b.ToTable("States", "Identity");
                 });
@@ -550,7 +548,8 @@ namespace GCS_CO.Migrations
                 {
                     b.HasOne("GCS_CO.Models.Region", "Region")
                         .WithMany("States")
-                        .HasForeignKey("RegionId")
+                        .HasForeignKey("RegionAbbrev")
+                        .HasPrincipalKey("RegionAbbrev")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
