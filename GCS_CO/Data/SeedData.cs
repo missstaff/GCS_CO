@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using GCS_CO.Models;
-using System.Drawing;
 
 namespace GCS_CO.Data
 {
@@ -286,38 +285,44 @@ namespace GCS_CO.Data
             }
 
             var cities = new List<City>
+{
+            new City
             {
+                CityName = "New York City",
+                StateAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.StateAbbrev,
+                RegionAbbrev = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.RegionAbbrev,
 
-                //new City { CityName = "New York City", CityState = context.States.FirstOrDefault(s => s.StateAbbrev == "NY") ?? new State { StateAbbrev = "NY", StateName = "New York" }, CityRegion = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.StateRegion },
-                //new City { Name = "Los Angeles", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-                //new City { Name = "Chicago", State = context.States.FirstOrDefault(s => s.StateAbbrev == "IL") ?? new State { StateAbbrev = "IL", StateName = "Illinois" } },
-                //new City { Name = "Houston", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
-                //new City { Name = "Phoenix", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
-                //new City { Name = "Philadelphia", State = context.States.FirstOrDefault(s => s.StateAbbrev == "PA") ?? new State { StateAbbrev = "PA", StateName = "Pennsylvania" } },
-                //new City { Name = "San Antonio", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
-                //new City { Name = "San Diego", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-                //new City { Name = "Dallas", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
-                //new City { Name = "Baltimore", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MD") ?? new State { StateAbbrev = "MD", StateName = "Maryland" } },
-                //new City { Name = "Milwaukee", State = context.States.FirstOrDefault(s => s.StateAbbrev == "WI") ?? new State { StateAbbrev = "WI", StateName = "Wisconsin" } },
-                //new City { Name = "Albuquerque", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NM") ?? new State { StateAbbrev = "NM", StateName = "New Mexico" } },
-                //new City { Name = "Tucson", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
-                //new City { Name = "Fresno", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-                //new City { Name = "Sacramento", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-                //new City { Name = "Kansas City", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MO") ?? new State { StateAbbrev = "MO", StateName = "Missouri" } },
-                //new City { Name = "Long Beach", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-                //new City { Name = "Mesa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
-                //new City { Name = "Atlanta", State = context.States.FirstOrDefault(s => s.StateAbbrev == "GA") ?? new State { StateAbbrev = "GA", StateName = "Georgia" } },
-                //new City { Name = "Colorado Springs", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CO") ?? new State { StateAbbrev = "CO", StateName = "Colorado" } },
-                //new City { Name = "Raleigh", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NC") ?? new State { StateAbbrev = "NC", StateName = "North Carolina" } },
-                //new City { Name = "Miami", State = context.States.FirstOrDefault(s => s.StateAbbrev == "FL") ?? new State { StateAbbrev = "FL", StateName = "Florida" } },
-                //new City { Name = "Oakland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
-                //new City { Name = "Minneapolis", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MN") ?? new State { StateAbbrev = "MN", StateName = "Minnesota" } },
-                //new City { Name = "Tulsa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OK") ?? new State { StateAbbrev = "OK", StateName = "Oklahoma" } },
-                //new City { Name = "Cleveland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OH") ?? new State { StateAbbrev = "OH", StateName = "Ohio" } },
-                //new City { Name = "Wichita", State = context.States.FirstOrDefault(s => s.StateAbbrev == "KS") ?? new State { StateAbbrev = "KS", StateName = "Kansas" } },
-                //new City { Name = "Arlington", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } }
+            },
+            //new City { CityName = "New York City", CityState = context.States.FirstOrDefault(s => s.StateAbbrev == "NY") ?? new State { StateAbbrev = "NY", StateName = "New York" }, CityRegion = context.States.FirstOrDefault(s => s.StateAbbrev == "NY")?.StateRegion },
+            //new City { Name = "Los Angeles", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+            //new City { Name = "Chicago", State = context.States.FirstOrDefault(s => s.StateAbbrev == "IL") ?? new State { StateAbbrev = "IL", StateName = "Illinois" } },
+            //new City { Name = "Houston", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
+            //new City { Name = "Phoenix", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
+            //new City { Name = "Philadelphia", State = context.States.FirstOrDefault(s => s.StateAbbrev == "PA") ?? new State { StateAbbrev = "PA", StateName = "Pennsylvania" } },
+            //new City { Name = "San Antonio", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
+            //new City { Name = "San Diego", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+            //new City { Name = "Dallas", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } },
+            //new City { Name = "Baltimore", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MD") ?? new State { StateAbbrev = "MD", StateName = "Maryland" } },
+            //new City { Name = "Milwaukee", State = context.States.FirstOrDefault(s => s.StateAbbrev == "WI") ?? new State { StateAbbrev = "WI", StateName = "Wisconsin" } },
+            //new City { Name = "Albuquerque", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NM") ?? new State { StateAbbrev = "NM", StateName = "New Mexico" } },
+            //new City { Name = "Tucson", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
+            //new City { Name = "Fresno", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+            //new City { Name = "Sacramento", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+            //new City { Name = "Kansas City", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MO") ?? new State { StateAbbrev = "MO", StateName = "Missouri" } },
+            //new City { Name = "Long Beach", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+            //new City { Name = "Mesa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "AZ") ?? new State { StateAbbrev = "AZ", StateName = "Arizona" } },
+            //new City { Name = "Atlanta", State = context.States.FirstOrDefault(s => s.StateAbbrev == "GA") ?? new State { StateAbbrev = "GA", StateName = "Georgia" } },
+            //new City { Name = "Colorado Springs", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CO") ?? new State { StateAbbrev = "CO", StateName = "Colorado" } },
+            //new City { Name = "Raleigh", State = context.States.FirstOrDefault(s => s.StateAbbrev == "NC") ?? new State { StateAbbrev = "NC", StateName = "North Carolina" } },
+            //new City { Name = "Miami", State = context.States.FirstOrDefault(s => s.StateAbbrev == "FL") ?? new State { StateAbbrev = "FL", StateName = "Florida" } },
+            //new City { Name = "Oakland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "CA") ?? new State { StateAbbrev = "CA", StateName = "California" } },
+            //new City { Name = "Minneapolis", State = context.States.FirstOrDefault(s => s.StateAbbrev == "MN") ?? new State { StateAbbrev = "MN", StateName = "Minnesota" } },
+            //new City { Name = "Tulsa", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OK") ?? new State { StateAbbrev = "OK", StateName = "Oklahoma" } },
+            //new City { Name = "Cleveland", State = context.States.FirstOrDefault(s => s.StateAbbrev == "OH") ?? new State { StateAbbrev = "OH", StateName = "Ohio" } },
+            //new City { Name = "Wichita", State = context.States.FirstOrDefault(s => s.StateAbbrev == "KS") ?? new State { StateAbbrev = "KS", StateName = "Kansas" } },
+            //new City { Name = "Arlington", State = context.States.FirstOrDefault(s => s.StateAbbrev == "TX") ?? new State { StateAbbrev = "TX", StateName = "Texas" } }
 
-            };
+        };
 
             //foreach (var city in cities)
             //{

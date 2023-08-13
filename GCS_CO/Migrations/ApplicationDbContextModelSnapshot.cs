@@ -139,17 +139,16 @@ namespace GCS_CO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityRegionRegionId")
-                        .HasColumnType("int");
+                    b.Property<string>("RegionAbbrev")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityStateStateId")
-                        .HasColumnType("int");
+                    b.Property<string>("StateAbbrev")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CityId");
 
-                    b.HasIndex("CityRegionRegionId");
-
-                    b.HasIndex("CityStateStateId");
+                    b.HasIndex("StateAbbrev");
 
                     b.ToTable("Cities", "Identity");
                 });
@@ -326,7 +325,7 @@ namespace GCS_CO.Migrations
 
                     b.Property<string>("StateAbbrev")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StateName")
                         .IsRequired()
@@ -478,21 +477,14 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.City", b =>
                 {
-                    b.HasOne("GCS_CO.Models.Region", "CityRegion")
-                        .WithMany()
-                        .HasForeignKey("CityRegionRegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GCS_CO.Models.State", "CityState")
+                    b.HasOne("GCS_CO.Models.State", "State")
                         .WithMany("Cities")
-                        .HasForeignKey("CityStateStateId")
+                        .HasForeignKey("StateAbbrev")
+                        .HasPrincipalKey("StateAbbrev")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("CityRegion");
-
-                    b.Navigation("CityState");
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.Customer", b =>
