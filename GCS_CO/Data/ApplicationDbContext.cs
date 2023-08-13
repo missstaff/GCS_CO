@@ -2,6 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using System.Configuration;
+using System.Numerics;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Threading.Channels;
 
 namespace GCS_CO.Data
 {
@@ -10,6 +16,15 @@ namespace GCS_CO.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {}
+
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<PostalCode> PostalCodes { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<State> States { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,12 +66,47 @@ namespace GCS_CO.Data
                 entity.ToTable(name: "UserTokens");
             });
 
+            //builder.Entity<Region>()
+            // .HasMany(r => r.States)  // A Region can have many States
+            // .WithOne(s => s.Region)  // A State belongs to one Region
+            // .OnDelete(DeleteBehavior.NoAction)  // Specify the desired delete behavior
+            // .IsRequired();  // Define the relationship as required
+
+
+            //builder.Entity<State>()
+            //    .HasOne(s => s.Region)
+            //    .WithMany(s => s.States)
+            //    .OnDelete(DeleteBehavior.NoAction)
+            //    .IsRequired();
+
+            builder.Entity<State>()
+                .HasKey(s => s.StateId);  // Define primary key for the State entity
+
+            builder.Entity<State>()
+                .HasOne(s => s.Region)  // Each state belongs to a region
+                .WithMany(r => r.States)  // A region can have multiple states
+                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder.Entity<Region>()
+                .HasKey(r => r.RegionId);  // Define primary key for the Region entity
+
+            builder.Entity<Region>()
+                .HasMany(r => r.States)  // A region can have multiple states
+                .WithOne(s => s.Region)  // Each state belongs to a region
+                .HasPrincipalKey(r => r.RegionAbbrev)
+                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+
+            builder.Entity<City>()
+                .HasOne(c => c.CityState)
+                .WithMany(s => s.Cities)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
         }
 
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Region> Regions { get; set; }
-        public DbSet<Skill> Skills { get; set; }
     }
 }

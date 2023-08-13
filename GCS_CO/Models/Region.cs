@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GCS_CO.Models
 {
     public class Region
     {
-        public int Id { get; set; }
+        [Key]
+        public int RegionId { get; set; }
+        public required string RegionAbbrev { get; set; }
+        public required string RegionName { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
-        public string Name { get; set; }
-
-        [Required(ErrorMessage = "A region abbreviation is required.")]
-        public string Abbreviation { get; set; }
+        public virtual ICollection<State> States { get; set; }
     }
 }
