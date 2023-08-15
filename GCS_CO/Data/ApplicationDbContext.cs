@@ -2,12 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System.Configuration;
-using System.Numerics;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Threading.Channels;
 
 namespace GCS_CO.Data
 {
@@ -15,7 +9,7 @@ namespace GCS_CO.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {}
+        { }
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -29,7 +23,7 @@ namespace GCS_CO.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.HasDefaultSchema("Identity");
+            builder.HasDefaultSchema("GCS");
 
             builder.Entity<AppUser>(entity =>
             {
@@ -67,47 +61,60 @@ namespace GCS_CO.Data
             });
 
             builder.Entity<Region>()
-              .HasKey(r => r.RegionId);  // Define primary key for the Region entity
+                .HasKey(r => r.RegionId);
 
             builder.Entity<Region>()
-                .HasMany(r => r.States)  // A region can have multiple states
-                .WithOne(s => s.Region)  // Each state belongs to a region
+                .HasMany(r => r.States)
+                .WithOne(s => s.Region)
                 .HasPrincipalKey(r => r.RegionAbbrev)
-                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
-
-
-            builder.Entity<State>()
-                .HasKey(s => s.StateId);  // Define primary key for the State entity
-
-            builder.Entity<State>()
-                .HasOne(s => s.Region)  // Each state belongs to a region
-                .WithMany(r => r.States)  // A region can have multiple states
-                .HasForeignKey(s => s.RegionAbbrev)  // Use RegionAbbrev as the foreign key
+                .HasForeignKey(s => s.RegionAbbrev)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             builder.Entity<State>()
-               .HasMany(c => c.Cities) // A state can have multiple cities
-               .WithOne(s => s.State) // Each city belongs to a state
-               .HasPrincipalKey(s => s.StateAbbrev)
-               .HasForeignKey(s => s.StateAbbrev)
-               .OnDelete(DeleteBehavior.NoAction)
-               .IsRequired();
+                .HasKey(s => s.StateId);
 
+            builder.Entity<State>()
+                .HasOne(s => s.Region)
+                .WithMany(r => r.States)
+                .HasForeignKey(s => s.RegionAbbrev)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder.Entity<State>()
+                .HasMany(c => c.Cities)
+                .WithOne(s => s.State)
+                .HasPrincipalKey(s => s.StateAbbrev)
+                .HasForeignKey(s => s.StateAbbrev)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
             builder.Entity<City>()
-                .HasKey(c => c.CityId);  // Define primary key for the City entity
+                .HasKey(c => new { c.CityName, c.StateAbbrev });
 
             builder.Entity<City>()
-                .HasOne(c => c.State)  // Each city belongs to a state
-                .WithMany(s => s.Cities)  // A state can have multiple cities
-                .HasForeignKey(c => c.StateAbbrev)  // Use StateAbbrev as the foreign key
+                .HasOne(c => c.State)
+                .WithMany(s => s.Cities)
+                .HasForeignKey(c => c.StateAbbrev)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-   
+
+            builder.Entity<City>()
+                .HasOne(c => c.PostalCode)
+                .WithOne(p => p.City)
+                .HasForeignKey<PostalCode>(p => new { p.CityName, p.StateAbbrev })
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder.Entity<PostalCode>()
+                .HasKey(p => p.PostalCodeId);
+
+            builder.Entity<PostalCode>()
+                .HasOne(p => p.City)
+                .WithOne(c => c.PostalCode)
+                .HasForeignKey<PostalCode>(p => new { p.CityName, p.StateAbbrev })
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
         }
-
     }
 }
