@@ -7,10 +7,11 @@ namespace GCS_CO.Models
         [Key]
         public int PostalCodeId { get; set; }
         public required string Code { get; set; }
+        public required string CityName { get; set; }
 
-        public  City City { get; set; }
-        public string? CityName { get; set; }
-        public string? StateAbbrev { get; set; }
+        public State? State { get; set; }
+        public  string? StateAbbrev { get; set; }
+        public string? RegionAbbrev { get; set; }
 
     }
 }

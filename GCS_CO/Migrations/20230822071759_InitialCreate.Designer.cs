@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230815035308_InitialCreate")]
+    [Migration("20230822071759_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -132,24 +132,13 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.City", b =>
                 {
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StateAbbrev")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("CityPostalCode")
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
 
-                    b.Property<string>("RegionAbbrev")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CityName", "StateAbbrev");
-
-                    b.HasIndex("StateAbbrev");
+                    b.HasKey("CityId");
 
                     b.ToTable("Cities", "GCS");
                 });
@@ -252,10 +241,13 @@ namespace GCS_CO.Migrations
 
                     b.Property<string>("CityName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Code")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegionAbbrev")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
@@ -264,8 +256,7 @@ namespace GCS_CO.Migrations
 
                     b.HasKey("PostalCodeId");
 
-                    b.HasIndex("CityName", "StateAbbrev")
-                        .IsUnique();
+                    b.HasIndex("StateAbbrev");
 
                     b.ToTable("PostalCodes", "GCS");
                 });
@@ -479,18 +470,6 @@ namespace GCS_CO.Migrations
                     b.ToTable("UserTokens", "GCS");
                 });
 
-            modelBuilder.Entity("GCS_CO.Models.City", b =>
-                {
-                    b.HasOne("GCS_CO.Models.State", "State")
-                        .WithMany("Cities")
-                        .HasForeignKey("StateAbbrev")
-                        .HasPrincipalKey("StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("State");
-                });
-
             modelBuilder.Entity("GCS_CO.Models.Customer", b =>
                 {
                     b.HasOne("GCS_CO.Models.Address", "Address")
@@ -539,13 +518,14 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
                 {
-                    b.HasOne("GCS_CO.Models.City", "City")
-                        .WithOne("PostalCode")
-                        .HasForeignKey("GCS_CO.Models.PostalCode", "CityName", "StateAbbrev")
+                    b.HasOne("GCS_CO.Models.State", "State")
+                        .WithMany("PostalCodes")
+                        .HasForeignKey("StateAbbrev")
+                        .HasPrincipalKey("StateAbbrev")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("City");
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>
@@ -611,12 +591,6 @@ namespace GCS_CO.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GCS_CO.Models.City", b =>
-                {
-                    b.Navigation("PostalCode")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GCS_CO.Models.Region", b =>
                 {
                     b.Navigation("States");
@@ -624,7 +598,7 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>
                 {
-                    b.Navigation("Cities");
+                    b.Navigation("PostalCodes");
                 });
 #pragma warning restore 612, 618
         }
