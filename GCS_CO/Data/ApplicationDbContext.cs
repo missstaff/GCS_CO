@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace GCS_CO.Data
 {
@@ -89,8 +90,13 @@ namespace GCS_CO.Data
                .OnDelete(DeleteBehavior.NoAction)
                .IsRequired();
 
-            builder.Entity<PostalCode>()
-                .HasKey(pc => pc.PostalCodeId);
+            //builder.Entity<State>()
+            //   .HasMany(c => c.Cities)
+            //   .WithOne(s => s.State)
+            //   .HasPrincipalKey(s => s.StateAbbrev)
+            //   .HasForeignKey(s => s.StateAbbrev)
+            //   .OnDelete(DeleteBehavior.NoAction)
+            //   .IsRequired();
 
             builder.Entity<PostalCode>()
                 .HasOne(pc => pc.State)
@@ -98,6 +104,30 @@ namespace GCS_CO.Data
                 .HasForeignKey(pc => pc.StateAbbrev) // Use StateAbbrev as the foreign key
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
+
+
+            //builder.Entity<City>()
+            //    .HasOne(c => c.State)
+            //    .WithMany(c => c.Cities)
+            //    .HasForeignKey(pc => pc.StateAbbrev) // Use StateAbbrev as the foreign key
+            //    .OnDelete(DeleteBehavior.NoAction)
+            //    .IsRequired();
+
+            builder.Entity<PostalCode>()
+                .HasKey(pc => pc.CityName);
+
+            builder.Entity<City>()
+                .HasKey(c => c.CityId);
+
+
+            builder.Entity<PostalCode>()
+                .HasOne<City>(c => c.City)
+                .WithOne(pc => pc.PostalCode)
+                .HasForeignKey<City>(c => c.CityName)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
+
+             
         }
     }
 }

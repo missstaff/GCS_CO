@@ -135,7 +135,25 @@ namespace GCS_CO.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
 
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegionAbbrev")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StateAbbrev")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CityId");
+
+                    b.HasIndex("CityName")
+                        .IsUnique()
+                        .HasFilter("[CityName] IS NOT NULL");
 
                     b.ToTable("Cities", "GCS");
                 });
@@ -230,28 +248,25 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
                 {
-                    b.Property<int>("PostalCodeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostalCodeId"));
-
                     b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PostalCodeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("RegionAbbrev")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("PostalCodeId");
+                    b.HasKey("CityName");
 
                     b.HasIndex("StateAbbrev");
 
@@ -467,6 +482,16 @@ namespace GCS_CO.Migrations
                     b.ToTable("UserTokens", "GCS");
                 });
 
+            modelBuilder.Entity("GCS_CO.Models.City", b =>
+                {
+                    b.HasOne("GCS_CO.Models.PostalCode", "PostalCode")
+                        .WithOne("City")
+                        .HasForeignKey("GCS_CO.Models.City", "CityName")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("PostalCode");
+                });
+
             modelBuilder.Entity("GCS_CO.Models.Customer", b =>
                 {
                     b.HasOne("GCS_CO.Models.Address", "Address")
@@ -585,6 +610,12 @@ namespace GCS_CO.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
+                {
+                    b.Navigation("City")
                         .IsRequired();
                 });
 
