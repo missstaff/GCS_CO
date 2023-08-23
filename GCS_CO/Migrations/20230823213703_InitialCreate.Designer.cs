@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230823212227_InitialCreate")]
+    [Migration("20230823213703_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -155,11 +155,11 @@ namespace GCS_CO.Migrations
 
                     b.HasKey("CityId");
 
-                    b.HasIndex("CityName")
+                    b.HasIndex("StateAbbrev");
+
+                    b.HasIndex("CityName", "StateAbbrev")
                         .IsUnique()
                         .HasFilter("[CityName] IS NOT NULL");
-
-                    b.HasIndex("StateAbbrev");
 
                     b.ToTable("Cities", "GCS");
                 });
@@ -257,19 +257,21 @@ namespace GCS_CO.Migrations
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("StateAbbrev")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostalId")
+                        .HasColumnType("int");
 
                     b.Property<string>("RegionAbbrev")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StateAbbrev")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CityName");
+                    b.HasKey("CityName", "StateAbbrev");
 
                     b.HasIndex("StateAbbrev");
 
@@ -487,17 +489,17 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.City", b =>
                 {
-                    b.HasOne("GCS_CO.Models.PostalCode", "PostalCode")
-                        .WithOne("City")
-                        .HasForeignKey("GCS_CO.Models.City", "CityName")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("GCS_CO.Models.State", "State")
                         .WithMany("Cities")
                         .HasForeignKey("StateAbbrev")
                         .HasPrincipalKey("StateAbbrev")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("GCS_CO.Models.PostalCode", "PostalCode")
+                        .WithOne("City")
+                        .HasForeignKey("GCS_CO.Models.City", "CityName", "StateAbbrev")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("PostalCode");
 

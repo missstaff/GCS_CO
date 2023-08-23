@@ -328,13 +328,14 @@ namespace GCS_CO.Migrations
                 columns: table => new
                 {
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostalId = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostalCodes", x => x.CityName);
+                    table.PrimaryKey("PK_PostalCodes", x => new { x.CityName, x.StateAbbrev });
                     table.ForeignKey(
                         name: "FK_PostalCodes_States_StateAbbrev",
                         column: x => x.StateAbbrev,
@@ -359,11 +360,11 @@ namespace GCS_CO.Migrations
                 {
                     table.PrimaryKey("PK_Cities", x => x.CityId);
                     table.ForeignKey(
-                        name: "FK_Cities_PostalCodes_CityName",
-                        column: x => x.CityName,
+                        name: "FK_Cities_PostalCodes_CityName_StateAbbrev",
+                        columns: x => new { x.CityName, x.StateAbbrev },
                         principalSchema: "GCS",
                         principalTable: "PostalCodes",
-                        principalColumn: "CityName");
+                        principalColumns: new[] { "CityName", "StateAbbrev" });
                     table.ForeignKey(
                         name: "FK_Cities_States_StateAbbrev",
                         column: x => x.StateAbbrev,
@@ -373,10 +374,10 @@ namespace GCS_CO.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_CityName",
+                name: "IX_Cities_CityName_StateAbbrev",
                 schema: "GCS",
                 table: "Cities",
-                column: "CityName",
+                columns: new[] { "CityName", "StateAbbrev" },
                 unique: true,
                 filter: "[CityName] IS NOT NULL");
 

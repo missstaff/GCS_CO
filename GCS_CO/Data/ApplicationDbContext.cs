@@ -114,7 +114,7 @@ namespace GCS_CO.Data
                 .IsRequired();
 
             builder.Entity<PostalCode>()
-                .HasKey(pc => pc.CityName);
+                .HasKey(pc => new { pc.CityName, pc.StateAbbrev});
 
             builder.Entity<City>()
                 .HasKey(c => c.CityId);
@@ -123,7 +123,7 @@ namespace GCS_CO.Data
             builder.Entity<PostalCode>()
                 .HasOne<City>(c => c.City)
                 .WithOne(pc => pc.PostalCode)
-                .HasForeignKey<City>(c => c.CityName)
+                .HasForeignKey<City>(c => new {c.CityName, c.StateAbbrev})
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired(false);
 
