@@ -12,7 +12,7 @@ namespace GCS_CO.Models
         public Region Region { get; set; }
         public required string RegionAbbrev { get; set; }
 
-        //public virtual ICollection<City> Cities { get; set; }
+        public virtual ICollection<City> Cities { get; set; }
         public virtual ICollection<PostalCode> PostalCodes { get; set; }
     }
 }

@@ -90,28 +90,28 @@ namespace GCS_CO.Data
                .OnDelete(DeleteBehavior.NoAction)
                .IsRequired();
 
-            //builder.Entity<State>()
-            //   .HasMany(c => c.Cities)
-            //   .WithOne(s => s.State)
-            //   .HasPrincipalKey(s => s.StateAbbrev)
-            //   .HasForeignKey(s => s.StateAbbrev)
-            //   .OnDelete(DeleteBehavior.NoAction)
-            //   .IsRequired();
+            builder.Entity<State>()
+               .HasMany(c => c.Cities)
+               .WithOne(s => s.State)
+               .HasPrincipalKey(s => s.StateAbbrev)
+               .HasForeignKey(s => s.StateAbbrev)
+               .OnDelete(DeleteBehavior.NoAction)
+               .IsRequired();
 
             builder.Entity<PostalCode>()
                 .HasOne(pc => pc.State)
                 .WithMany(s => s.PostalCodes)
-                .HasForeignKey(pc => pc.StateAbbrev) // Use StateAbbrev as the foreign key
+                .HasForeignKey(pc => pc.StateAbbrev)  //Use StateAbbrev as the foreign key
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
 
-            //builder.Entity<City>()
-            //    .HasOne(c => c.State)
-            //    .WithMany(c => c.Cities)
-            //    .HasForeignKey(pc => pc.StateAbbrev) // Use StateAbbrev as the foreign key
-            //    .OnDelete(DeleteBehavior.NoAction)
-            //    .IsRequired();
+            builder.Entity<City>()
+                .HasOne(c => c.State)
+                .WithMany(c => c.Cities)
+                .HasForeignKey(pc => pc.StateAbbrev)  //Use StateAbbrev as the foreign key
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
             builder.Entity<PostalCode>()
                 .HasKey(pc => pc.CityName);

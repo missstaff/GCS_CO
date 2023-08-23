@@ -139,6 +139,7 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
@@ -147,13 +148,15 @@ namespace GCS_CO.Migrations
 
                     b.Property<string>("StateAbbrev")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CityId");
 
                     b.HasIndex("CityName")
                         .IsUnique()
                         .HasFilter("[CityName] IS NOT NULL");
+
+                    b.HasIndex("StateAbbrev");
 
                     b.ToTable("Cities", "GCS");
                 });
@@ -254,9 +257,6 @@ namespace GCS_CO.Migrations
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostalCodeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("RegionAbbrev")
                         .IsRequired()
@@ -489,7 +489,16 @@ namespace GCS_CO.Migrations
                         .HasForeignKey("GCS_CO.Models.City", "CityName")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("GCS_CO.Models.State", "State")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateAbbrev")
+                        .HasPrincipalKey("StateAbbrev")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("PostalCode");
+
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.Customer", b =>
@@ -626,6 +635,8 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("PostalCodes");
                 });
 #pragma warning restore 612, 618

@@ -328,7 +328,6 @@ namespace GCS_CO.Migrations
                 columns: table => new
                 {
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostalCodeId = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -352,9 +351,9 @@ namespace GCS_CO.Migrations
                     CityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    StateAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,6 +364,12 @@ namespace GCS_CO.Migrations
                         principalSchema: "GCS",
                         principalTable: "PostalCodes",
                         principalColumn: "CityName");
+                    table.ForeignKey(
+                        name: "FK_Cities_States_StateAbbrev",
+                        column: x => x.StateAbbrev,
+                        principalSchema: "GCS",
+                        principalTable: "States",
+                        principalColumn: "StateAbbrev");
                 });
 
             migrationBuilder.CreateIndex(
@@ -374,6 +379,12 @@ namespace GCS_CO.Migrations
                 column: "CityName",
                 unique: true,
                 filter: "[CityName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_StateAbbrev",
+                schema: "GCS",
+                table: "Cities",
+                column: "StateAbbrev");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_AddressId",
