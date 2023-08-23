@@ -5,9 +5,13 @@ namespace GCS_CO.Models
     public class PostalCode
     {
         [Key]
-        public int Id { get; set; }
+        public int PostalId { get; set; }
+        public required string CityName { get; set; }
         public required string Code { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
+        public State State { get; set; }
+        public required string StateAbbrev { get; set; }
+        public required string RegionAbbrev { get; set; }
+
+        public City City { get; set; }
     }
 }
