@@ -291,9 +291,9 @@ namespace GCS_CO.Data
             new City
             {
                 CityName = "New York City",
-                StateAbbrev = context.States.FirstOrDefault(c => c.StateName == "New York")?.StateAbbrev,
-                RegionAbbrev = context.States.FirstOrDefault(c => c.StateName == "New York")?.RegionAbbrev,
-                Code = context.PostalCodes.FirstOrDefault(c => c.CityName == "New York City").Code,
+                StateAbbrev = context.PostalCodes.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.StateAbbrev,
+                RegionAbbrev = context.PostalCodes.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.RegionAbbrev,
+                Code = context.PostalCodes.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY").Code,
 
             },
             //new City
