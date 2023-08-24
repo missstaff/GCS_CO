@@ -4,8 +4,6 @@ namespace GCS_CO.Models
 {
     public class PostalCode
     {
-        [Key]
-        public int PostalId { get; set; }
         public required string CityName { get; set; }
         public required string Code { get; set; }
         public State State { get; set; }

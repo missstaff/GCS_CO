@@ -14,6 +14,8 @@ namespace GCS_CO.Models
 
         public PostalCode PostalCode { get; set; }
         public required string Code { get; set; }
+
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }
 

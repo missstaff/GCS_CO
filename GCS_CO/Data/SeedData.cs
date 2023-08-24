@@ -13,6 +13,8 @@ namespace GCS_CO.Data
             await SeedStatesAsync(context);
             await SeedPostalCodesAsync(context);
             await SeedCitiesAsync(context);
+            await SeedAddressTypesAsync(context);
+            await SeedAddressesAsync(context);
 
         }
 
@@ -86,7 +88,7 @@ namespace GCS_CO.Data
                     Email = teamMemberEmail,
                     EmailConfirmed = true,
                     FirstName = "Tom",
-                    NormalizedEmail= teamMemberEmail,
+                    NormalizedEmail = teamMemberEmail,
                 };
 
                 await userManager.CreateAsync(teamMemberUser, teamMemberPassword);
@@ -244,7 +246,7 @@ namespace GCS_CO.Data
 
             var postalCodes = new List<PostalCode>
             {
-                new PostalCode { Code = "10001", CityName = "New York City", StateAbbrev = context.States.FirstOrDefault(c => c.StateName == "New York")?.StateAbbrev, RegionAbbrev = context.States.FirstOrDefault(c => c.StateName == "New York")?.RegionAbbrev }, 
+                new PostalCode { Code = "10001", CityName = "New York City", StateAbbrev = context.States.FirstOrDefault(c => c.StateName == "New York")?.StateAbbrev, RegionAbbrev = context.States.FirstOrDefault(c => c.StateName == "New York")?.RegionAbbrev },
                 new PostalCode { Code = "90001", CityName = "Los Angeles", StateAbbrev = context.States.FirstOrDefault(c => c.StateName == "California")?.StateAbbrev, RegionAbbrev = context.States.FirstOrDefault(c => c.StateName == "California")?.RegionAbbrev },
                 new PostalCode { Code = "60601", CityName = "Chicago", StateAbbrev = context.States.FirstOrDefault(c => c.StateName == "Illinois")?.StateAbbrev, RegionAbbrev = context.States.FirstOrDefault(c => c.StateName == "Illinois")?.RegionAbbrev },
                 new PostalCode { Code = "77001", CityName = "Houston", StateAbbrev = context.States.FirstOrDefault(c => c.StateName == "Texas")?.StateAbbrev, RegionAbbrev = context.States.FirstOrDefault(c => c.StateName == "Texas")?.RegionAbbrev },
@@ -287,7 +289,7 @@ namespace GCS_CO.Data
             }
 
             var cities = new List<City>
-            { 
+            {
             new City
             {
                 CityName = "New York City",
@@ -492,6 +494,64 @@ namespace GCS_CO.Data
         };
 
             await context.Cities.AddRangeAsync(cities);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedAddressTypesAsync(ApplicationDbContext context)
+        {
+            if (context.AddressTypes.Any())
+            {
+                return;
+            }
+            var addressTypes = new List<AddressType>
+            { 
+                new AddressType
+                {
+                    Type = "Home",
+                },
+
+                new AddressType
+                {
+                    Type = "Office",
+                },
+
+                new AddressType
+                {
+                    Type = "Mailing",
+                },
+
+                new AddressType
+                {
+                    Type = "PO Box",
+                },
+            };
+
+            await context.AddressTypes.AddRangeAsync(addressTypes);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedAddressesAsync(ApplicationDbContext context)
+        {
+            if (context.Addresses.Any())
+            {
+                return;
+            }
+            var addresses = new List<Address>
+            {
+                new Address
+                {
+                    Number = "8969",
+                    Street = "Rosetta Circle",
+                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.CityName,
+                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.Code,
+                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.StateAbbrev,
+                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+
+                }
+            };
+
+            await context.Addresses.AddRangeAsync(addresses);
             await context.SaveChangesAsync();
         }
     }

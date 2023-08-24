@@ -15,19 +15,18 @@ namespace GCS_CO.Migrations
                 name: "GCS");
 
             migrationBuilder.CreateTable(
-                name: "Addresses",
+                name: "AddressTypes",
                 schema: "GCS",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    AddressTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.PrimaryKey("PK_AddressTypes", x => x.AddressTypeId);
+                    table.UniqueConstraint("AK_AddressTypes_Type", x => x.Type);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,39 +107,6 @@ namespace GCS_CO.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
-                schema: "GCS",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false),
-                    RegionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalSchema: "GCS",
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Customers_Regions_RegionId",
-                        column: x => x.RegionId,
-                        principalSchema: "GCS",
-                        principalTable: "Regions",
-                        principalColumn: "RegionId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "States",
                 schema: "GCS",
                 columns: table => new
@@ -182,48 +148,6 @@ namespace GCS_CO.Migrations
                         column: x => x.RoleId,
                         principalSchema: "GCS",
                         principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employees",
-                schema: "GCS",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegionId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employees_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalSchema: "GCS",
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Employees_Regions_RegionId",
-                        column: x => x.RegionId,
-                        principalSchema: "GCS",
-                        principalTable: "Regions",
-                        principalColumn: "RegionId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Employees_Skills_SkillId",
-                        column: x => x.SkillId,
-                        principalSchema: "GCS",
-                        principalTable: "Skills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -329,7 +253,6 @@ namespace GCS_CO.Migrations
                 {
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostalId = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -351,7 +274,7 @@ namespace GCS_CO.Migrations
                 {
                     CityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityName = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -359,6 +282,7 @@ namespace GCS_CO.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.CityId);
+                    table.UniqueConstraint("AK_Cities_CityName_StateAbbrev", x => new { x.CityName, x.StateAbbrev });
                     table.ForeignKey(
                         name: "FK_Cities_PostalCodes_CityName_StateAbbrev",
                         columns: x => new { x.CityName, x.StateAbbrev },
@@ -373,13 +297,124 @@ namespace GCS_CO.Migrations
                         principalColumn: "StateAbbrev");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Cities_CityName_StateAbbrev",
+            migrationBuilder.CreateTable(
+                name: "Addresses",
                 schema: "GCS",
-                table: "Cities",
-                columns: new[] { "CityName", "StateAbbrev" },
-                unique: true,
-                filter: "[CityName] IS NOT NULL");
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AddressTypes_Type",
+                        column: x => x.Type,
+                        principalSchema: "GCS",
+                        principalTable: "AddressTypes",
+                        principalColumn: "Type");
+                    table.ForeignKey(
+                        name: "FK_Addresses_Cities_CityName_StateAbbrev",
+                        columns: x => new { x.CityName, x.StateAbbrev },
+                        principalSchema: "GCS",
+                        principalTable: "Cities",
+                        principalColumns: new[] { "CityName", "StateAbbrev" });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                schema: "GCS",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: false),
+                    RegionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalSchema: "GCS",
+                        principalTable: "Addresses",
+                        principalColumn: "AddressId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Customers_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalSchema: "GCS",
+                        principalTable: "Regions",
+                        principalColumn: "RegionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                schema: "GCS",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegionId = table.Column<int>(type: "int", nullable: false),
+                    SkillId = table.Column<int>(type: "int", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalSchema: "GCS",
+                        principalTable: "Addresses",
+                        principalColumn: "AddressId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalSchema: "GCS",
+                        principalTable: "Regions",
+                        principalColumn: "RegionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_Skills_SkillId",
+                        column: x => x.SkillId,
+                        principalSchema: "GCS",
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_CityName_StateAbbrev",
+                schema: "GCS",
+                table: "Addresses",
+                columns: new[] { "CityName", "StateAbbrev" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_Type",
+                schema: "GCS",
+                table: "Addresses",
+                column: "Type");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_StateAbbrev",
@@ -480,10 +515,6 @@ namespace GCS_CO.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cities",
-                schema: "GCS");
-
-            migrationBuilder.DropTable(
                 name: "Customers",
                 schema: "GCS");
 
@@ -512,10 +543,6 @@ namespace GCS_CO.Migrations
                 schema: "GCS");
 
             migrationBuilder.DropTable(
-                name: "PostalCodes",
-                schema: "GCS");
-
-            migrationBuilder.DropTable(
                 name: "Addresses",
                 schema: "GCS");
 
@@ -529,6 +556,18 @@ namespace GCS_CO.Migrations
 
             migrationBuilder.DropTable(
                 name: "User",
+                schema: "GCS");
+
+            migrationBuilder.DropTable(
+                name: "AddressTypes",
+                schema: "GCS");
+
+            migrationBuilder.DropTable(
+                name: "Cities",
+                schema: "GCS");
+
+            migrationBuilder.DropTable(
+                name: "PostalCodes",
                 schema: "GCS");
 
             migrationBuilder.DropTable(
