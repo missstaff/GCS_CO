@@ -13,6 +13,7 @@ namespace GCS_CO.Data
         { }
 
         public DbSet<Address> Addresses { get; set; }
+        public DbSet <AddressType> AddressTypes { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -127,7 +128,41 @@ namespace GCS_CO.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired(false);
 
-             
+            builder.Entity<City>()
+              .HasMany(c => c.Addresses)
+              .WithOne(c => c.City)
+              .HasPrincipalKey(c => new {c.CityName, c.StateAbbrev})
+              .HasForeignKey(c => new { c.CityName, c.StateAbbrev })
+              .OnDelete(DeleteBehavior.NoAction)
+              .IsRequired();
+
+            builder.Entity<Address>()
+                .HasKey(a => a.AddressId);
+
+            builder.Entity<Address>()
+               .HasOne(a => a.City)
+               .WithMany(a => a.Addresses)
+               .HasForeignKey(c => new { c.CityName, c.StateAbbrev })
+               .OnDelete(DeleteBehavior.NoAction)
+               .IsRequired();
+
+            builder.Entity<AddressType>()
+                .HasKey(a => a.AddressTypeId);
+
+            builder.Entity<AddressType>()
+             .HasMany(a => a.Addresses)
+             .WithOne(a => a.AddressType)
+             .HasPrincipalKey(a => a.Type)
+             .HasForeignKey(a => a.Type)
+             .OnDelete(DeleteBehavior.NoAction)
+             .IsRequired();
+
+            builder.Entity<Address>()
+              .HasOne(a => a.AddressType)
+              .WithMany(a => a.Addresses)
+              .HasForeignKey(a => a.Type)
+              .OnDelete(DeleteBehavior.NoAction)
+              .IsRequired();
         }
     }
 }

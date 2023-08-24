@@ -4,15 +4,18 @@ namespace GCS_CO.Models
 {
     public class Address
     {
-        public int Id { get; set; }
+        [Key]
+        public int AddressId { get; set; }
+        public required string Number { get; set; }
+        public required string Street { get; set; }
 
-        [Required(ErrorMessage = "Street is required.")]
-        public string Street { get; set; }
+        public City City { get; set; }
+        public required string CityName { get; set; }
+        public required string StateAbbrev { get; set; }
+        public required string PostalCode { get; set; }
+        public required string RegionAbbrev { get; set; }
 
-        [Required(ErrorMessage = "City is required.")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Postal code is required.")]
-        public string PostalCode { get; set; }
+        public AddressType AddressType { get; set; }
+        public required string Type { get; set; }
     }
 }
