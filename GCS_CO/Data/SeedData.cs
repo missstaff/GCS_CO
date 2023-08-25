@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using GCS_CO.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GCS_CO.Data
 {
@@ -14,7 +15,9 @@ namespace GCS_CO.Data
             await SeedPostalCodesAsync(context);
             await SeedCitiesAsync(context);
             await SeedAddressTypesAsync(context);
+            await SeedEmployeesAsync(context);
             await SeedAddressesAsync(context);
+
 
         }
 
@@ -540,6 +543,9 @@ namespace GCS_CO.Data
             {
                 new Address
                 {
+                    EmployeeId = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com").EmployeeId,
+                    FirstName = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com").FirstName,
+                    LastName = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com").LastName,
                     Number = "8969",
                     Street = "Rosetta Circle",
                     CityName = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.CityName,
@@ -552,6 +558,31 @@ namespace GCS_CO.Data
             };
 
             await context.Addresses.AddRangeAsync(addresses);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedEmployeesAsync(ApplicationDbContext context)
+        {
+            if (context.Employees.Any())
+            {
+                return;
+            }
+            var employees = new List<Employee>
+            {
+                new Employee
+                {
+                    FirstName = "Shawna",
+                    LastName = "Staff",
+                    Email = "staffs@gcs.com",
+                    PhoneNumber = "9163348986",
+                    //SkillName = context.Skills.FirstOrDefault(s => s.Name == "ASP 1").Name,
+                    //RateOfPay = context.Skills.FirstOrDefault(s => s.Name == "ASP 1").RateOfPay,
+                    DateHired = new DateTime(2023, 1, 1),
+                    RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                }
+            };
+
+            await context.Employees.AddRangeAsync(employees);
             await context.SaveChangesAsync();
         }
     }

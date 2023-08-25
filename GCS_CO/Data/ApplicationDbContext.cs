@@ -15,7 +15,7 @@ namespace GCS_CO.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet <AddressType> AddressTypes { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<PostalCode> PostalCodes { get; set; }
@@ -163,6 +163,32 @@ namespace GCS_CO.Data
               .HasForeignKey(a => a.Type)
               .OnDelete(DeleteBehavior.NoAction)
               .IsRequired();
+
+            builder.Entity<Employee>()
+               .HasKey(e => e.EmployeeId);
+
+            builder.Entity<Region>()
+               .HasMany(r => r.Employees)
+               .WithOne(s => s.Region)
+               .HasPrincipalKey(r => r.RegionAbbrev)
+               .HasForeignKey(s => s.RegionAbbrev)
+               .OnDelete(DeleteBehavior.NoAction)
+               .IsRequired();
+
+            builder.Entity<Employee>()
+                .HasOne(s => s.Region)
+                .WithMany(r => r.Employees)
+                .HasForeignKey(s => s.RegionAbbrev)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder.Entity<Employee>()
+              .HasMany(e => e.Addresses) // Employee has many Addresses
+              .WithOne(a => a.Employee)  // Address has one Employee
+              .HasForeignKey(a => a.EmployeeId) // Foreign key
+              .OnDelete(DeleteBehavior.Cascade) // Cascade delete if an employee is deleted
+              .IsRequired(); // Addresses are required for an Employee
+
         }
     }
 }

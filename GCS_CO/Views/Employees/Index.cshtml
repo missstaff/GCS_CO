@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<GCS_CO.Models.Employee>
 
 @{
-    ViewBag.Title = "Employees";
+    ViewData["Title"] = "Index";
 }
 
-<h1>@ViewBag.Title</h1>
-@*TODO:// Add a search filter*@
+<h1>Index</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -30,12 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Region)
             </th>
-            <th>
+          @*  <th>
                 @Html.DisplayNameFor(model => model.Skill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -60,16 +57,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Region.RegionAbbrev)
             </td>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.Skill.Description)
-            </td>
+            </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.Address.City)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EmployeeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
             </td>
         </tr>
 }

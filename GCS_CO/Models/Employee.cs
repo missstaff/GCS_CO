@@ -5,40 +5,21 @@ namespace GCS_CO.Models
 {
     public class Employee
     {
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public required string Email { get; set; }
+        public required string PhoneNumber { get; set; }
+        public required DateTime DateHired { get; set; }
 
-        [Required(ErrorMessage = "First name is required.")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "First name must be between 2 and 50 characters.")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "Last name is required.")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Last name must be between 2 and 50 characters.")]
-        public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email address.")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Phone number is required.")]
-        [Phone(ErrorMessage = "Invalid phone number.")]
-        public string PhoneNumber { get; set; }
-
-        [Required(ErrorMessage = "Date hired is required.")]
-        public DateTime DateHired { get; set; }
-
-        //// Foreign key to Region table
-        [Required(ErrorMessage = "Region is required.")]
-        public int RegionId { get; set; }
         public Region Region { get; set; }
+        public required string RegionAbbrev { get; set; }
 
-        // Foreign key to Skill table
-        [Required(ErrorMessage = "Skill is required.")]
-        public int SkillId { get; set; }
-        public Skill Skill { get; set; }
+        //public Skill Skill { get; set; }
+        //public required string SkillName { get; set; }
+        //public required int RateOfPay {  get; set; }
 
-        // Foreign key to Address table
-        [Required(ErrorMessage = "Address is required.")]
-        public int AddressId { get; set; }
-        public Address Address { get; set; }
+
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

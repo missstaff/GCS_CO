@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GCS_CO.Data;
 using GCS_CO.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace GCS_CO.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,7 +22,7 @@ namespace GCS_CO.Controllers.Admin
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Employees.Include(e => e.Address).Include(e => e.Region).Include(e => e.Skill);
+            var applicationDbContext = _context.Employees.Include(e => e.Region); //.Include(e => e.Skill);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -33,10 +35,9 @@ namespace GCS_CO.Controllers.Admin
             }
 
             var employee = await _context.Employees
-                .Include(e => e.Address)
                 .Include(e => e.Region)
-                .Include(e => e.Skill)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                //.Include(e => e.Skill)
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
             if (employee == null)
             {
                 return NotFound();
@@ -48,8 +49,7 @@ namespace GCS_CO.Controllers.Admin
         // GET: Employees/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "City");
-            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Abbreviation");
+            ViewData["RegionId"] = new SelectList(_context.Regions, "RegionId", "RegionAbbrev");
             ViewData["SkillId"] = new SelectList(_context.Skills, "Id", "Description");
             return View();
         }
@@ -59,7 +59,7 @@ namespace GCS_CO.Controllers.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,DateHired,RegionId,SkillId,AddressId")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,DateHired,RegionId,SkillId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -67,9 +67,8 @@ namespace GCS_CO.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "City", employee.AddressId);
-            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Abbreviation", employee.RegionId);
-            ViewData["SkillId"] = new SelectList(_context.Skills, "Id", "Description", employee.SkillId);
+            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionId", "RegionAbbrev", employee.RegionAbbrev);
+            //ViewData["SkillId"] = new SelectList(_context.Skills, "Id", "Description", employee.SkillName);
             return View(employee);
         }
 
@@ -86,9 +85,8 @@ namespace GCS_CO.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "City", employee.AddressId);
-            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Abbreviation", employee.RegionId);
-            ViewData["SkillId"] = new SelectList(_context.Skills, "Id", "Description", employee.SkillId);
+            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionId", "RegionAbbrev", employee.RegionAbbrev);
+            //ViewData["SkillName"] = new SelectList(_context.Skills, "Id", "Description", employee.SkillName);
             return View(employee);
         }
 
@@ -97,9 +95,9 @@ namespace GCS_CO.Controllers.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,PhoneNumber,DateHired,RegionId,SkillId,AddressId")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,FirstName,LastName,Email,PhoneNumber,DateHired,RegionId,SkillId")] Employee employee)
         {
-            if (id != employee.Id)
+            if (id != employee.EmployeeId)
             {
                 return NotFound();
             }
@@ -113,7 +111,7 @@ namespace GCS_CO.Controllers.Admin
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!EmployeeExists(employee.EmployeeId))
                     {
                         return NotFound();
                     }
@@ -124,9 +122,8 @@ namespace GCS_CO.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "City", employee.AddressId);
-            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Abbreviation", employee.RegionId);
-            ViewData["SkillId"] = new SelectList(_context.Skills, "Id", "Description", employee.SkillId);
+            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionId", "RegionAbbrev", employee.RegionAbbrev);
+          //  ViewData["SkillName"] = new SelectList(_context.Skills, "Id", "Description", employee.SkillName);
             return View(employee);
         }
 
@@ -139,10 +136,9 @@ namespace GCS_CO.Controllers.Admin
             }
 
             var employee = await _context.Employees
-                .Include(e => e.Address)
                 .Include(e => e.Region)
-                .Include(e => e.Skill)
-                .FirstOrDefaultAsync(m => m.Id == id);
+              //  .Include(e => e.Skill)
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
             if (employee == null)
             {
                 return NotFound();
@@ -172,7 +168,7 @@ namespace GCS_CO.Controllers.Admin
 
         private bool EmployeeExists(int id)
         {
-          return (_context.Employees?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Employees?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
     }
 }

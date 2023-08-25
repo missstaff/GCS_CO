@@ -10,5 +10,6 @@ namespace GCS_CO.Models
         public required string RegionName { get; set; }
 
         public virtual ICollection<State> States { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }
