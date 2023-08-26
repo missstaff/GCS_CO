@@ -567,12 +567,16 @@ namespace GCS_CO.Data
                     {
                         new EmployeeSkill
                         { 
+                            Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com"),
+                            Skill = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1"),
                             SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillName,
                             SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillDescription,
                             SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillPayRate,
+                            FirstName = "Shawna",
+                            LastName = "Staff",
 
                         }
-                    }
+                    },
                 }
             };
 

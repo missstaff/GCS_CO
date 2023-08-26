@@ -17,6 +17,7 @@ namespace GCS_CO.Data
         public DbSet<City> Cities { get; set; }
         //public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeSkill> EmployeeSkills { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<PostalCode> PostalCodes { get; set; }
         public DbSet<Skill> Skills { get; set; }
@@ -115,7 +116,7 @@ namespace GCS_CO.Data
                 .IsRequired();
 
             builder.Entity<PostalCode>()
-                .HasKey(pc => new { pc.CityName, pc.StateAbbrev});
+                .HasKey(pc => new { pc.CityName, pc.StateAbbrev });
 
             builder.Entity<City>()
                 .HasKey(c => c.CityId);
@@ -124,17 +125,17 @@ namespace GCS_CO.Data
             builder.Entity<PostalCode>()
                 .HasOne<City>(c => c.City)
                 .WithOne(pc => pc.PostalCode)
-                .HasForeignKey<City>(c => new {c.CityName, c.StateAbbrev})
+                .HasForeignKey<City>(c => new { c.CityName, c.StateAbbrev })
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired(false);
 
             builder.Entity<City>()
-              .HasMany(c => c.Addresses)
-              .WithOne(c => c.City)
-              .HasPrincipalKey(c => new {c.CityName, c.StateAbbrev})
-              .HasForeignKey(c => new { c.CityName, c.StateAbbrev })
-              .OnDelete(DeleteBehavior.NoAction)
-              .IsRequired();
+                .HasMany(c => c.Addresses)
+                .WithOne(c => c.City)
+                .HasPrincipalKey(c => new {c.CityName, c.StateAbbrev})
+                .HasForeignKey(c => new { c.CityName, c.StateAbbrev })
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
             builder.Entity<Address>()
                 .HasKey(a => a.AddressId);
@@ -150,30 +151,30 @@ namespace GCS_CO.Data
                 .HasKey(a => a.AddressTypeId);
 
             builder.Entity<AddressType>()
-             .HasMany(a => a.Addresses)
-             .WithOne(a => a.AddressType)
-             .HasPrincipalKey(a => a.Type)
-             .HasForeignKey(a => a.Type)
-             .OnDelete(DeleteBehavior.NoAction)
-             .IsRequired();
+                .HasMany(a => a.Addresses)
+                .WithOne(a => a.AddressType)
+                .HasPrincipalKey(a => a.Type)
+                .HasForeignKey(a => a.Type)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
             builder.Entity<Address>()
-              .HasOne(a => a.AddressType)
-              .WithMany(a => a.Addresses)
-              .HasForeignKey(a => a.Type)
-              .OnDelete(DeleteBehavior.NoAction)
-              .IsRequired();
+                .HasOne(a => a.AddressType)
+                .WithMany(a => a.Addresses)
+                .HasForeignKey(a => a.Type)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
             builder.Entity<Employee>()
-               .HasKey(e => e.EmployeeId);
+                .HasKey(e => e.EmployeeId);
 
             builder.Entity<Region>()
-               .HasMany(r => r.Employees)
-               .WithOne(s => s.Region)
-               .HasPrincipalKey(r => r.RegionAbbrev)
-               .HasForeignKey(s => s.RegionAbbrev)
-               .OnDelete(DeleteBehavior.NoAction)
-               .IsRequired();
+                .HasMany(r => r.Employees)
+                .WithOne(s => s.Region)
+                .HasPrincipalKey(r => r.RegionAbbrev)
+                .HasForeignKey(s => s.RegionAbbrev)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
             builder.Entity<Employee>()
                 .HasOne(s => s.Region)
@@ -183,28 +184,34 @@ namespace GCS_CO.Data
                 .IsRequired();
 
             builder.Entity<Employee>()
-              .HasMany(e => e.Addresses) // Employee has many Addresses
-              .WithOne(a => a.Employee)  // Address has one Employee
-              .HasForeignKey(a => a.EmployeeId) // Foreign key
-              .OnDelete(DeleteBehavior.Cascade) // Cascade delete if an employee is deleted
-              .IsRequired(); // Addresses are required for an Employee
+                .HasMany(e => e.Addresses) // Employee has many Addresses
+                .WithOne(a => a.Employee)  // Address has one Employee
+                .HasForeignKey(a => a.EmployeeId) // Foreign key
+                .OnDelete(DeleteBehavior.Cascade) // Cascade delete if an employee is deleted
+                .IsRequired(); // Addresses are required for an Employee
 
-            builder.Entity<Skill>()
-                .HasKey(s => s.SkillId);
+
+            builder.Entity<Employee>()
+                .HasMany(e => e.EmployeeSkills) // Employee has many EmployeeSkills
+                .WithOne(es => es.Employee)      // EmployeeSkill has one Employee
+                .HasForeignKey(es => es.EmployeeId) // Foreign key
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if an employee is deleted
 
             builder.Entity<EmployeeSkill>()
-     .HasKey(es => es.EmployeeSkillId);
+                .HasKey(es => es.EmployeeSkillId);
 
             builder.Entity<EmployeeSkill>()
                 .HasOne(es => es.Employee)
                 .WithMany(e => e.EmployeeSkills)
-                .HasForeignKey(es => es.EmployeeId);
+                .HasForeignKey(es => es.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<EmployeeSkill>()
                 .HasOne(es => es.Skill)
                 .WithMany(s => s.EmployeeSkills)
-                .HasPrincipalKey(es => es.SkillName)
-                .HasForeignKey(es => es.SkillName); // Use SkillId instead of SkillName
+                .HasPrincipalKey(s => s.SkillName)
+                .HasForeignKey(es => es.SkillName)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
         }

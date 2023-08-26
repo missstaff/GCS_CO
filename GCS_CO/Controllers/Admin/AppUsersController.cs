@@ -1,5 +1,6 @@
 ﻿using GCS_CO.Data;
 using GCS_CO.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using System.Data;
 
 namespace GCS_CO.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AppUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
