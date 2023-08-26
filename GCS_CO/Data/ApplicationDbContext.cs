@@ -189,6 +189,24 @@ namespace GCS_CO.Data
               .OnDelete(DeleteBehavior.Cascade) // Cascade delete if an employee is deleted
               .IsRequired(); // Addresses are required for an Employee
 
+            builder.Entity<Skill>()
+                .HasKey(s => s.SkillId);
+
+            builder.Entity<EmployeeSkill>()
+     .HasKey(es => es.EmployeeSkillId);
+
+            builder.Entity<EmployeeSkill>()
+                .HasOne(es => es.Employee)
+                .WithMany(e => e.EmployeeSkills)
+                .HasForeignKey(es => es.EmployeeId);
+
+            builder.Entity<EmployeeSkill>()
+                .HasOne(es => es.Skill)
+                .WithMany(s => s.EmployeeSkills)
+                .HasPrincipalKey(es => es.SkillName)
+                .HasForeignKey(es => es.SkillName); // Use SkillId instead of SkillName
+
+
         }
     }
 }

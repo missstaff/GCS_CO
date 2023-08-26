@@ -1,17 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace GCS_CO.Models
+
 {
-    public class Skill
+    public class EmployeeSkill
     {
         [Key]
-        public int SkillId { get; set; }
+        public int EmployeeSkillId { get; set; }
+
+        public int EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
+
         public required string SkillName { get; set; }
         public required string SkillDescription { get; set; }
         public required int SkillPayRate { get; set; }
-
-        public virtual ICollection<Employee>? Employees { get; set; }
-        public virtual ICollection<EmployeeSkill>? EmployeeSkills { get; set; }
+        public Skill? Skill { get; set; }
     }
 }

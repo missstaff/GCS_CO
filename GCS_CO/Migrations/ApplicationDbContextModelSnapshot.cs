@@ -38,14 +38,6 @@ namespace GCS_CO.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -239,11 +231,47 @@ namespace GCS_CO.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("SkillId")
+                        .HasColumnType("int");
+
                     b.HasKey("EmployeeId");
 
                     b.HasIndex("RegionAbbrev");
 
+                    b.HasIndex("SkillId");
+
                     b.ToTable("Employees", "GCS");
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.EmployeeSkill", b =>
+                {
+                    b.Property<int>("EmployeeSkillId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeSkillId"));
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SkillPayRate")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeSkillId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SkillName");
+
+                    b.ToTable("EmployeeSkill", "GCS");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
@@ -292,24 +320,24 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.Skill", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SkillId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillId"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("SkillDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("SkillName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("RateOfPay")
+                    b.Property<int>("SkillPayRate")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SkillId");
 
                     b.ToTable("Skills", "GCS");
                 });
@@ -535,7 +563,31 @@ namespace GCS_CO.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("GCS_CO.Models.Skill", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("SkillId");
+
                     b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.EmployeeSkill", b =>
+                {
+                    b.HasOne("GCS_CO.Models.Employee", "Employee")
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GCS_CO.Models.Skill", "Skill")
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("SkillName")
+                        .HasPrincipalKey("SkillName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
@@ -626,6 +678,8 @@ namespace GCS_CO.Migrations
             modelBuilder.Entity("GCS_CO.Models.Employee", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("EmployeeSkills");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
@@ -639,6 +693,13 @@ namespace GCS_CO.Migrations
                     b.Navigation("Employees");
 
                     b.Navigation("States");
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.Skill", b =>
+                {
+                    b.Navigation("EmployeeSkills");
+
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>

@@ -16,7 +16,6 @@ namespace GCS_CO.Data
             await SeedCitiesAsync(context);
             await SeedAddressTypesAsync(context);
             await SeedEmployeesAsync(context);
-            await SeedAddressesAsync(context);
 
 
         }
@@ -108,29 +107,29 @@ namespace GCS_CO.Data
 
             var skills = new List<Skill>
             {
-                new Skill { Name = "Data Entry 1", Description = "Data Entry 1", RateOfPay = 50 },
-                new Skill { Name = "Data Entry 2", Description = "Data Entry 2", RateOfPay = 75 },
-                new Skill { Name = "Systems Analyst 1", Description = "Systems Analyst 1", RateOfPay = 80 },
-                new Skill { Name = "Systems Analyst 2", Description = "Systems Analyst 2", RateOfPay = 90 },
-                new Skill { Name = "DB Designer 1", Description = "DB Designer 1", RateOfPay = 90 },
-                new Skill { Name = "DB Designer 2", Description = "DB Designer 2", RateOfPay = 90 },
-                new Skill { Name = "Cobol 1", Description = "Cobol 1", RateOfPay = 120 },
-                new Skill { Name = "Cobol 2", Description = "Cobol 2", RateOfPay = 150 },
-                new Skill { Name = "C++ 1", Description = "C++ 1", RateOfPay = 90 },
-                new Skill { Name = "C++ 2", Description = "C++ 2", RateOfPay = 110 },
-                new Skill { Name = "VB 1", Description = "VB 1", RateOfPay = 100 },
-                new Skill { Name = "VB 2", Description = "VB 2", RateOfPay = 120 },
-                new Skill { Name = "Cold Fusion 1", Description = "Cold Fusion 1", RateOfPay = 120 },
-                new Skill { Name = "Cold Fusion 2", Description = "Cold Fusion 2", RateOfPay = 150 },
-                new Skill { Name = "ASP 1", Description = "ASP 1", RateOfPay = 70 },
-                new Skill { Name = "ASP 2", Description = "ASP 2", RateOfPay = 90 },
-                new Skill { Name = "Oracle DBA", Description = "Oracle DBA", RateOfPay = 150 },
-                new Skill { Name = "SQL Server DBA", Description = "SQL Server DBA", RateOfPay = 150 },
-                new Skill { Name = "Network Engineer 1", Description = "Network Engineer 1", RateOfPay = 90 },
-                new Skill { Name = "Network Engineer 2", Description = "Network Engineer 2", RateOfPay = 130 },
-                new Skill { Name = "Web Administrator", Description = "Web Administrator", RateOfPay = 50 },
-                new Skill { Name = "Technical Writer", Description = "Technical Writer", RateOfPay = 90 },
-                new Skill { Name = "Project Manager", Description = "Project Manager", RateOfPay = 180 },
+                new Skill { SkillName = "Data Entry 1", SkillDescription = "Data Entry 1", SkillPayRate = 50 },
+                new Skill { SkillName = "Data Entry 2", SkillDescription = "Data Entry 2", SkillPayRate = 75 },
+                new Skill { SkillName = "Systems Analyst 1", SkillDescription = "Systems Analyst 1", SkillPayRate = 80 },
+                new Skill { SkillName = "Systems Analyst 2", SkillDescription = "Systems Analyst 2", SkillPayRate = 90 },
+                new Skill { SkillName = "DB Designer 1", SkillDescription = "DB Designer 1", SkillPayRate = 90 },
+                new Skill { SkillName = "DB Designer 2", SkillDescription = "DB Designer 2", SkillPayRate = 90 },
+                new Skill { SkillName = "Cobol 1", SkillDescription = "Cobol 1", SkillPayRate = 120 },
+                new Skill { SkillName = "Cobol 2", SkillDescription = "Cobol 2", SkillPayRate = 150 },
+                new Skill { SkillName = "C++ 1", SkillDescription = "C++ 1", SkillPayRate = 90 },
+                new Skill { SkillName = "C++ 2", SkillDescription = "C++ 2", SkillPayRate = 110 },
+                new Skill { SkillName = "VB 1", SkillDescription = "VB 1", SkillPayRate = 100 },
+                new Skill { SkillName = "VB 2", SkillDescription = "VB 2", SkillPayRate = 120 },
+                new Skill { SkillName = "Cold Fusion 1", SkillDescription = "Cold Fusion 1", SkillPayRate = 120 },
+                new Skill { SkillName = "Cold Fusion 2", SkillDescription = "Cold Fusion 2", SkillPayRate = 150 },
+                new Skill { SkillName = "ASP 1", SkillDescription = "ASP 1", SkillPayRate = 70 },
+                new Skill { SkillName = "ASP 2", SkillDescription = "ASP 2", SkillPayRate = 90 },
+                new Skill { SkillName = "Oracle DBA", SkillDescription = "Oracle DBA", SkillPayRate = 150 },
+                new Skill { SkillName = "SQL Server DBA", SkillDescription = "SQL Server DBA", SkillPayRate = 150 },
+                new Skill { SkillName = "Network Engineer 1", SkillDescription = "Network Engineer 1", SkillPayRate = 90 },
+                new Skill { SkillName = "Network Engineer 2", SkillDescription = "Network Engineer 2", SkillPayRate = 130 },
+                new Skill { SkillName = "Web Administrator", SkillDescription = "Web Administrator", SkillPayRate = 50 },
+                new Skill { SkillName = "Technical Writer", SkillDescription = "Technical Writer", SkillPayRate = 90 },
+                new Skill { SkillName = "Project Manager", SkillDescription = "Project Manager", SkillPayRate = 180 },
             };
 
             await context.Skills.AddRangeAsync(skills);
@@ -533,52 +532,47 @@ namespace GCS_CO.Data
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedAddressesAsync(ApplicationDbContext context)
-        {
-            if (context.Addresses.Any())
-            {
-                return;
-            }
-            var addresses = new List<Address>
-            {
-                new Address
-                {
-                    EmployeeId = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com").EmployeeId,
-                    FirstName = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com").FirstName,
-                    LastName = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com").LastName,
-                    Number = "8969",
-                    Street = "Rosetta Circle",
-                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.CityName,
-                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.Code,
-                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.StateAbbrev,
-                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.RegionAbbrev,
-                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
-
-                }
-            };
-
-            await context.Addresses.AddRangeAsync(addresses);
-            await context.SaveChangesAsync();
-        }
-
         private static async Task SeedEmployeesAsync(ApplicationDbContext context)
         {
             if (context.Employees.Any())
             {
                 return;
             }
+          
             var employees = new List<Employee>
             {
+
                 new Employee
                 {
                     FirstName = "Shawna",
                     LastName = "Staff",
                     Email = "staffs@gcs.com",
                     PhoneNumber = "9163348986",
-                    //SkillName = context.Skills.FirstOrDefault(s => s.Name == "ASP 1").Name,
-                    //RateOfPay = context.Skills.FirstOrDefault(s => s.Name == "ASP 1").RateOfPay,
                     DateHired = new DateTime(2023, 1, 1),
                     RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Number = "8969",
+                            Street = "Rosetta Circle",
+                            CityName = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.CityName,
+                            PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.Code,
+                            StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.StateAbbrev,
+                            RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                            Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                        }
+                    },
+                    EmployeeSkills = new List<EmployeeSkill>
+                    {
+                        new EmployeeSkill
+                        { 
+                            SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillName,
+                            SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillDescription,
+                            SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillPayRate,
+
+                        }
+                    }
                 }
             };
 

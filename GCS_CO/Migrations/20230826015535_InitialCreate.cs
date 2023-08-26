@@ -65,15 +65,16 @@ namespace GCS_CO.Migrations
                 schema: "GCS",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SkillId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RateOfPay = table.Column<int>(type: "int", nullable: false)
+                    SkillName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SkillDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SkillPayRate = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Skills", x => x.Id);
+                    table.PrimaryKey("PK_Skills", x => x.SkillId);
+                    table.UniqueConstraint("AK_Skills_SkillName", x => x.SkillName);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,31 +105,6 @@ namespace GCS_CO.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employees",
-                schema: "GCS",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
-                    table.ForeignKey(
-                        name: "FK_Employees_Regions_RegionAbbrev",
-                        column: x => x.RegionAbbrev,
-                        principalSchema: "GCS",
-                        principalTable: "Regions",
-                        principalColumn: "RegionAbbrev");
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +151,38 @@ namespace GCS_CO.Migrations
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                schema: "GCS",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SkillId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.ForeignKey(
+                        name: "FK_Employees_Regions_RegionAbbrev",
+                        column: x => x.RegionAbbrev,
+                        principalSchema: "GCS",
+                        principalTable: "Regions",
+                        principalColumn: "RegionAbbrev");
+                    table.ForeignKey(
+                        name: "FK_Employees_Skills_SkillId",
+                        column: x => x.SkillId,
+                        principalSchema: "GCS",
+                        principalTable: "Skills",
+                        principalColumn: "SkillId");
                 });
 
             migrationBuilder.CreateTable(
@@ -293,6 +301,37 @@ namespace GCS_CO.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeeSkill",
+                schema: "GCS",
+                columns: table => new
+                {
+                    EmployeeSkillId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    SkillName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SkillDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SkillPayRate = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeSkill", x => x.EmployeeSkillId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSkill_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalSchema: "GCS",
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSkill_Skills_SkillName",
+                        column: x => x.SkillName,
+                        principalSchema: "GCS",
+                        principalTable: "Skills",
+                        principalColumn: "SkillName",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cities",
                 schema: "GCS",
                 columns: table => new
@@ -330,8 +369,6 @@ namespace GCS_CO.Migrations
                     AddressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -393,6 +430,24 @@ namespace GCS_CO.Migrations
                 schema: "GCS",
                 table: "Employees",
                 column: "RegionAbbrev");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_SkillId",
+                schema: "GCS",
+                table: "Employees",
+                column: "SkillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeSkill_EmployeeId",
+                schema: "GCS",
+                table: "EmployeeSkill",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeSkill_SkillName",
+                schema: "GCS",
+                table: "EmployeeSkill",
+                column: "SkillName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostalCodes_StateAbbrev",
@@ -461,11 +516,11 @@ namespace GCS_CO.Migrations
                 schema: "GCS");
 
             migrationBuilder.DropTable(
-                name: "RoleClaims",
+                name: "EmployeeSkill",
                 schema: "GCS");
 
             migrationBuilder.DropTable(
-                name: "Skills",
+                name: "RoleClaims",
                 schema: "GCS");
 
             migrationBuilder.DropTable(
@@ -506,6 +561,10 @@ namespace GCS_CO.Migrations
 
             migrationBuilder.DropTable(
                 name: "PostalCodes",
+                schema: "GCS");
+
+            migrationBuilder.DropTable(
+                name: "Skills",
                 schema: "GCS");
 
             migrationBuilder.DropTable(
