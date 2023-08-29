@@ -1,0 +1,52 @@
+﻿@model IEnumerable<GCS_CO.Models.PostalCode>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegionAbbrev)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StateAbbrev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegionAbbrev)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id=item.CityName + "-" + item.StateAbbrev }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CityName + "-" + item.StateAbbrev })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace GCS_CO.Models
 {
     public class Skill
     {
-        public int Id { get; set; }
+        [Key]
+        public int SkillId { get; set; }
+        public required string SkillName { get; set; }
+        public required string SkillDescription { get; set; }
+        public required int SkillPayRate { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
-        public string Name { get; set; }
-
-        [Required(ErrorMessage = "Description is required.")]
-        public string Description { get; set; }
-
-        [Required(ErrorMessage = "Rate of pay is required.")]
-        public int RateOfPay { get; set; }
+        public virtual ICollection<Employee>? Employees { get; set; }
+        public virtual ICollection<EmployeeSkill>? EmployeeSkills { get; set; }
     }
 }

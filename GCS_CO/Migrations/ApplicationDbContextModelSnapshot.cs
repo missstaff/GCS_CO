@@ -18,7 +18,7 @@ namespace GCS_CO.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("GCS")
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -32,23 +32,22 @@ namespace GCS_CO.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
 
                     b.Property<string>("CityName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Street")
@@ -56,10 +55,11 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AddressId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("Type");
 
@@ -181,7 +181,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
@@ -195,55 +194,13 @@ namespace GCS_CO.Migrations
                     b.ToTable("Cities", "GCS");
                 });
 
-            modelBuilder.Entity("GCS_CO.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Customers", "GCS");
-                });
-
             modelBuilder.Entity("GCS_CO.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
 
                     b.Property<DateTime>("DateHired")
                         .HasColumnType("datetime2");
@@ -254,33 +211,68 @@ namespace GCS_CO.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RegionId")
+                    b.Property<string>("RegionAbbrev")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("SkillId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
+                    b.HasKey("EmployeeId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("RegionId");
+                    b.HasIndex("RegionAbbrev");
 
                     b.HasIndex("SkillId");
 
                     b.ToTable("Employees", "GCS");
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.EmployeeSkill", b =>
+                {
+                    b.Property<int>("EmployeeSkillId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeSkillId"));
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SkillPayRate")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeSkillId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SkillName");
+
+                    b.ToTable("EmployeeSkills", "GCS");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
@@ -296,7 +288,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CityName", "StateAbbrev");
@@ -329,24 +320,24 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.Skill", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SkillId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillId"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("SkillDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("SkillName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("RateOfPay")
+                    b.Property<int>("SkillPayRate")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SkillId");
 
                     b.ToTable("Skills", "GCS");
                 });
@@ -360,7 +351,6 @@ namespace GCS_CO.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"));
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StateAbbrev")
@@ -517,23 +507,29 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.Address", b =>
                 {
+                    b.HasOne("GCS_CO.Models.Employee", "Employee")
+                        .WithMany("Addresses")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GCS_CO.Models.AddressType", "AddressType")
                         .WithMany("Addresses")
                         .HasForeignKey("Type")
                         .HasPrincipalKey("Type")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("GCS_CO.Models.City", "City")
                         .WithMany("Addresses")
                         .HasForeignKey("CityName", "StateAbbrev")
                         .HasPrincipalKey("CityName", "StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AddressType");
 
                     b.Navigation("City");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.City", b =>
@@ -542,61 +538,49 @@ namespace GCS_CO.Migrations
                         .WithMany("Cities")
                         .HasForeignKey("StateAbbrev")
                         .HasPrincipalKey("StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("GCS_CO.Models.PostalCode", "PostalCode")
                         .WithOne("City")
                         .HasForeignKey("GCS_CO.Models.City", "CityName", "StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("PostalCode");
 
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("GCS_CO.Models.Customer", b =>
+            modelBuilder.Entity("GCS_CO.Models.Employee", b =>
                 {
-                    b.HasOne("GCS_CO.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GCS_CO.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Employees")
+                        .HasForeignKey("RegionAbbrev")
+                        .HasPrincipalKey("RegionAbbrev")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Address");
+                    b.HasOne("GCS_CO.Models.Skill", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("SkillId");
 
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("GCS_CO.Models.Employee", b =>
+            modelBuilder.Entity("GCS_CO.Models.EmployeeSkill", b =>
                 {
-                    b.HasOne("GCS_CO.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GCS_CO.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("GCS_CO.Models.Employee", "Employee")
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GCS_CO.Models.Skill", "Skill")
-                        .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("SkillName")
+                        .HasPrincipalKey("SkillName")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Address");
-
-                    b.Navigation("Region");
+                    b.Navigation("Employee");
 
                     b.Navigation("Skill");
                 });
@@ -607,8 +591,7 @@ namespace GCS_CO.Migrations
                         .WithMany("PostalCodes")
                         .HasForeignKey("StateAbbrev")
                         .HasPrincipalKey("StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("State");
                 });
@@ -619,8 +602,7 @@ namespace GCS_CO.Migrations
                         .WithMany("States")
                         .HasForeignKey("RegionAbbrev")
                         .HasPrincipalKey("RegionAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Region");
                 });
@@ -686,15 +668,30 @@ namespace GCS_CO.Migrations
                     b.Navigation("Addresses");
                 });
 
+            modelBuilder.Entity("GCS_CO.Models.Employee", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("EmployeeSkills");
+                });
+
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
                 {
-                    b.Navigation("City")
-                        .IsRequired();
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.Region", b =>
                 {
+                    b.Navigation("Employees");
+
                     b.Navigation("States");
+                });
+
+            modelBuilder.Entity("GCS_CO.Models.Skill", b =>
+                {
+                    b.Navigation("EmployeeSkills");
+
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.State", b =>
