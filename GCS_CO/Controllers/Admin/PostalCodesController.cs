@@ -134,6 +134,7 @@ namespace GCS_CO.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            //set admin task to update all user's addresses effetcted by this delete and make sure the admin has a list of employees to contact
             if (_context.PostalCodes == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.PostalCodes'  is null.");

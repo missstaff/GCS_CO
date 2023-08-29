@@ -13,9 +13,9 @@ namespace GCS_CO.Models
         public required string Street { get; set; }
 
         public City? City { get; set; }
-        public required string CityName { get; set; }
+        public string? CityName { get; set; }
         public string? StateAbbrev { get; set; }
-        public required string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
         public string? RegionAbbrev { get; set; }
 
         public AddressType? AddressType { get; set; }

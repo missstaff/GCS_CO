@@ -134,7 +134,7 @@ namespace GCS_CO.Data
                 .WithOne(c => c.City)
                 .HasPrincipalKey(c => new {c.CityName, c.StateAbbrev})
                 .HasForeignKey(c => new { c.CityName, c.StateAbbrev })
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(false);
 
             builder.Entity<Address>()
@@ -144,7 +144,7 @@ namespace GCS_CO.Data
                .HasOne(a => a.City)
                .WithMany(a => a.Addresses)
                .HasForeignKey(c => new { c.CityName, c.StateAbbrev })
-               .OnDelete(DeleteBehavior.NoAction)
+               .OnDelete(DeleteBehavior.Cascade)
                .IsRequired(false);
 
             builder.Entity<AddressType>()
