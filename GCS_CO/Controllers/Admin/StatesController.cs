@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using GCS_CO.Data;
 using GCS_CO.Models;
 using System.Drawing;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace GCS_CO.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class StatesController : Controller
     {
         private readonly ApplicationDbContext _context;
