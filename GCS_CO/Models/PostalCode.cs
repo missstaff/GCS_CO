@@ -8,7 +8,7 @@ namespace GCS_CO.Models
         public required string Code { get; set; }
 
         public State? State { get; set; }
-        public required string StateAbbrev { get; set; }
+        public string? StateAbbrev { get; set; }
         public string? RegionAbbrev { get; set; }
 
         public City? City { get; set; }

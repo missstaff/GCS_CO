@@ -37,3 +37,10 @@
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+
+@if (TempData.ContainsKey("DeleteErrorMessage"))
+{
+    <div class="alert alert-danger">
+        @TempData["DeleteErrorMessage"]
+    </div>
+}

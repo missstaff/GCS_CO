@@ -375,10 +375,10 @@ namespace GCS_CO.Migrations
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {

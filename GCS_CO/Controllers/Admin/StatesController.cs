@@ -173,6 +173,16 @@ namespace GCS_CO.Controllers.Admin
             var state = await _context.States.FindAsync(id);
             if (state != null)
             {
+                var addresses = await _context.Addresses.Where(a => a.StateAbbrev == state.StateAbbrev).ToListAsync();
+                var postalCodes = await _context.PostalCodes.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                if (postalCodes.Any() || addresses.Any())
+                {
+                    // You can use TempData to store a message and display it after redirect
+                    TempData["DeleteErrorMessage"] = "Cannot delete this state because it has associated records.";
+
+                    return RedirectToAction(nameof(Index));
+                }
+
                 _context.States.Remove(state);
             }
             

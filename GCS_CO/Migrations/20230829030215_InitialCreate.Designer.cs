@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230829020149_InitialCreate")]
+    [Migration("20230829030215_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,7 +53,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Street")
@@ -61,7 +60,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AddressId");
@@ -524,15 +522,13 @@ namespace GCS_CO.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("Type")
                         .HasPrincipalKey("Type")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("GCS_CO.Models.City", "City")
                         .WithMany("Addresses")
                         .HasForeignKey("CityName", "StateAbbrev")
                         .HasPrincipalKey("CityName", "StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AddressType");
 
@@ -547,8 +543,7 @@ namespace GCS_CO.Migrations
                         .WithMany("Cities")
                         .HasForeignKey("StateAbbrev")
                         .HasPrincipalKey("StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("GCS_CO.Models.PostalCode", "PostalCode")
                         .WithOne("City")
@@ -601,8 +596,7 @@ namespace GCS_CO.Migrations
                         .WithMany("PostalCodes")
                         .HasForeignKey("StateAbbrev")
                         .HasPrincipalKey("StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("State");
                 });
