@@ -7,12 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GCS_CO.Data;
 using GCS_CO.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
+using System.Drawing;
 
 namespace GCS_CO.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
     public class StatesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -100,11 +98,30 @@ namespace GCS_CO.Controllers.Admin
             {
                 return NotFound();
             }
+           
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var postalCodesToUpdate = await _context.PostalCodes.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                    foreach (var postalCode in postalCodesToUpdate)
+                    {
+                        postalCode.RegionAbbrev = state.RegionAbbrev;
+                    }
+
+                    var citiesToUpdate = await _context.Cities.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                    foreach (var city in citiesToUpdate)
+                    {
+                        city.RegionAbbrev = state.RegionAbbrev;
+                    }
+
+                    var addressesToUpdate = await _context.Addresses.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                    foreach (var address in addressesToUpdate)
+                    {
+                        address.RegionAbbrev = state.RegionAbbrev;
+                    }
+
                     _context.Update(state);
                     await _context.SaveChangesAsync();
                 }

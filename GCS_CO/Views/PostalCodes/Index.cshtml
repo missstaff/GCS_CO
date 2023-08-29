@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.CityName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Code)
             </th>
             <th>
@@ -28,18 +31,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.CityName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Code)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.State.RegionAbbrev)
+                @Html.DisplayFor(modelItem => item.StateAbbrev)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RegionAbbrev)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Details", "Details", new { id=item.CityName + "-" + item.StateAbbrev }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CityName + "-" + item.StateAbbrev })
             </td>
         </tr>
 }

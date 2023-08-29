@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GCS_CO.Data;
 using GCS_CO.Models;
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 
@@ -37,9 +38,18 @@ namespace GCS_CO.Controllers.Admin
                 return NotFound();
             }
 
+            var ids = id.Split('-');
+            if (ids.Length != 2)
+            {
+                return NotFound();
+            }
+
+            var cityName = ids[0];
+            var stateAbbrev = ids[1];
+
             var postalCode = await _context.PostalCodes
-                .Include(p => p.State)
-                .FirstOrDefaultAsync(m => m.CityName == id);
+              .Include(p => p.State)
+              .FirstOrDefaultAsync(m => m.CityName == cityName && m.StateAbbrev == stateAbbrev);
             if (postalCode == null)
             {
                 return NotFound();
@@ -51,7 +61,8 @@ namespace GCS_CO.Controllers.Admin
         // GET: PostalCodes/Create
         public IActionResult Create()
         {
-            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "RegionAbbrev");
+            ViewData["StateAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "StateAbbrev");
+            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev");
             return View();
         }
 
@@ -66,62 +77,25 @@ namespace GCS_CO.Controllers.Admin
             {
                 _context.Add(postalCode);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "RegionAbbrev", postalCode.StateAbbrev);
-            return View(postalCode);
-        }
 
-        // GET: PostalCodes/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null || _context.PostalCodes == null)
-            {
-                return NotFound();
-            }
-
-            var postalCode = await _context.PostalCodes.FindAsync(id);
-            if (postalCode == null)
-            {
-                return NotFound();
-            }
-            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "RegionAbbrev", postalCode.StateAbbrev);
-            return View(postalCode);
-        }
-
-        // POST: PostalCodes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CityName,Code,StateAbbrev,RegionAbbrev")] PostalCode postalCode)
-        {
-            if (id != postalCode.CityName)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                var existingCity = _context.Cities.FirstOrDefault(c => c.CityName == postalCode.CityName && c.StateAbbrev == postalCode.StateAbbrev);
+                if (existingCity == null)
                 {
-                    _context.Update(postalCode);
+                    var newCity = new City
+                    {
+                        CityName = postalCode.CityName,
+                        StateAbbrev = postalCode.StateAbbrev,
+                        RegionAbbrev = postalCode.RegionAbbrev,
+                        Code = postalCode.Code,
+                    };
+                    _context.Cities.Add(newCity);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PostalCodeExists(postalCode.CityName))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "RegionAbbrev", postalCode.StateAbbrev);
+            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "StateAbbrev", postalCode.StateAbbrev);
+            ViewData["RegionAbbrev"] = new SelectList(_context.States, "RegionAbbrev", "RegionAbbrev", postalCode.RegionAbbrev);
             return View(postalCode);
         }
 
@@ -133,9 +107,19 @@ namespace GCS_CO.Controllers.Admin
                 return NotFound();
             }
 
+            var ids = id.Split('-');
+            if (ids.Length != 2)
+            {
+                return NotFound();
+            }
+
+            var cityName = ids[0];
+            var stateAbbrev = ids[1];
+
             var postalCode = await _context.PostalCodes
                 .Include(p => p.State)
-                .FirstOrDefaultAsync(m => m.CityName == id);
+                .FirstOrDefaultAsync(m => m.CityName == cityName && m.StateAbbrev == stateAbbrev);
+
             if (postalCode == null)
             {
                 return NotFound();
@@ -143,6 +127,7 @@ namespace GCS_CO.Controllers.Admin
 
             return View(postalCode);
         }
+
 
         // POST: PostalCodes/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -153,7 +138,20 @@ namespace GCS_CO.Controllers.Admin
             {
                 return Problem("Entity set 'ApplicationDbContext.PostalCodes'  is null.");
             }
-            var postalCode = await _context.PostalCodes.FindAsync(id);
+
+            var ids = id.Split('-');
+            if (ids.Length != 2)
+            {
+                return NotFound();
+            }
+
+            var cityName = ids[0];
+            var stateAbbrev = ids[1];
+
+            var postalCode = await _context.PostalCodes
+              .Include(p => p.State)
+              .FirstOrDefaultAsync(m => m.CityName == cityName && m.StateAbbrev == stateAbbrev);
+
             if (postalCode != null)
             {
                 _context.PostalCodes.Remove(postalCode);
@@ -165,7 +163,10 @@ namespace GCS_CO.Controllers.Admin
 
         private bool PostalCodeExists(string id)
         {
-          return (_context.PostalCodes?.Any(e => e.CityName == id)).GetValueOrDefault();
+            var ids = id.Split('-');
+            var cityName = ids[0];
+            var stateAbbrev = ids[1];
+            return (_context.PostalCodes?.Any(e => e.CityName == cityName && e.StateAbbrev == stateAbbrev)).GetValueOrDefault();
         }
     }
 }

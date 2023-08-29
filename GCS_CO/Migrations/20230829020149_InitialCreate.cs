@@ -116,7 +116,7 @@ namespace GCS_CO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,7 +127,8 @@ namespace GCS_CO.Migrations
                         column: x => x.RegionAbbrev,
                         principalSchema: "GCS",
                         principalTable: "Regions",
-                        principalColumn: "RegionAbbrev");
+                        principalColumn: "RegionAbbrev",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,7 +166,7 @@ namespace GCS_CO.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateHired = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     SkillId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -176,7 +177,8 @@ namespace GCS_CO.Migrations
                         column: x => x.RegionAbbrev,
                         principalSchema: "GCS",
                         principalTable: "Regions",
-                        principalColumn: "RegionAbbrev");
+                        principalColumn: "RegionAbbrev",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Employees_Skills_SkillId",
                         column: x => x.SkillId,
@@ -287,7 +289,7 @@ namespace GCS_CO.Migrations
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -340,7 +342,7 @@ namespace GCS_CO.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -352,7 +354,8 @@ namespace GCS_CO.Migrations
                         columns: x => new { x.CityName, x.StateAbbrev },
                         principalSchema: "GCS",
                         principalTable: "PostalCodes",
-                        principalColumns: new[] { "CityName", "StateAbbrev" });
+                        principalColumns: new[] { "CityName", "StateAbbrev" },
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cities_States_StateAbbrev",
                         column: x => x.StateAbbrev,
@@ -374,7 +377,7 @@ namespace GCS_CO.Migrations
                     CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>

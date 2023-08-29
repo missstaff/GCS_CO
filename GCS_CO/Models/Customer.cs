@@ -26,8 +26,8 @@ namespace GCS_CO.Models
         public Address Address { get; set; }
 
         // Foreign key to Region table
-        [Required(ErrorMessage = "Region is required.")]
-        public int RegionId { get; set; }
-        public Region Region { get; set; }
+        //[Required(ErrorMessage = "Region is required.")]
+        //public int RegionId { get; set; }
+        //public Region? Region { get; set; }
     }
 }

@@ -16,7 +16,9 @@
 
             <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
+                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId">
+                    <option value="">-- Select an Employee --</option>
+                </select>
                 <span asp-validation-for="EmployeeId" class="text-danger"></span>
             </div>
 
@@ -34,27 +36,37 @@
             </div>
             <div class="form-group">
                 <label asp-for="CityName" class="control-label"></label>
-                <select asp-for="CityName" class ="form-control" asp-items="ViewBag.CityName"></select>
+                <select asp-for="CityName" class ="form-control" asp-items="ViewBag.CityName">
+                    <option value="">-- Select a City --</option>
+                </select>
                 <span asp-validation-for="CityName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StateAbbrev" class="control-label"></label>
-                <select asp-for="StateAbbrev" class ="form-control" asp-items="ViewBag.StateAbbrev"></select>
+                <select asp-for="StateAbbrev" class ="form-control" asp-items="ViewBag.StateAbbrev">
+                    <option value="">-- Select a State --</option>
+                </select>
                 <span asp-validation-for="StateAbbrev" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PostalCode" class="control-label"></label>
-                <select asp-for="PostalCode" class="form-control" asp-items="ViewBag.PostalCode"></select>
+                <select asp-for="PostalCode" class="form-control" asp-items="ViewBag.PostalCode">
+                    <option value="">-- Select a PostalCode --</option>
+                </select>
                 <span asp-validation-for="PostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RegionAbbrev" class="control-label"></label>
-                <select asp-for="RegionAbbrev" class="form-control" asp-items="ViewBag.RegionAbbrev"></select>
+                <select asp-for="RegionAbbrev" class="form-control" asp-items="ViewBag.RegionAbbrev">
+                    <option value="">-- Select a Region --</option>
+                </select>
                 <span asp-validation-for="RegionAbbrev" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class ="form-control" asp-items="ViewBag.Type"></select>
+                <select asp-for="Type" class ="form-control" asp-items="ViewBag.Type">
+                    <option value="">-- Select an AddressType --</option>
+                </select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">

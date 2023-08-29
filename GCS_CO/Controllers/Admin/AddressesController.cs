@@ -101,7 +101,6 @@ namespace GCS_CO.Controllers.Admin
             ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "StateAbbrev", address.StateAbbrev);
             ViewData["PostalCode"] = new SelectList(_context.Cities, "Code", "Code", address.PostalCode);
             ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev", address.RegionAbbrev);
-            ViewData["Employee"] = new SelectList(_context.Employees, "LastName", "LastName", address.Employee.LastName);
 
             return View(address);
         }

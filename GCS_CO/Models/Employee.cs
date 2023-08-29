@@ -14,7 +14,7 @@ namespace GCS_CO.Models
         public required DateTime DateHired { get; set; }
 
         public Region? Region { get; set; }
-        public required string RegionAbbrev { get; set; }
+        public string? RegionAbbrev { get; set; }
 
         public virtual required ICollection<Address> Addresses { get; set; }
         public virtual ICollection<EmployeeSkill>? EmployeeSkills { get; set; }

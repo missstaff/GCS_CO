@@ -47,7 +47,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
@@ -186,7 +185,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateAbbrev")
@@ -228,7 +226,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("SkillId")
@@ -295,7 +292,6 @@ namespace GCS_CO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CityName", "StateAbbrev");
@@ -359,7 +355,6 @@ namespace GCS_CO.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"));
 
                     b.Property<string>("RegionAbbrev")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StateAbbrev")
@@ -555,7 +550,7 @@ namespace GCS_CO.Migrations
                     b.HasOne("GCS_CO.Models.PostalCode", "PostalCode")
                         .WithOne("City")
                         .HasForeignKey("GCS_CO.Models.City", "CityName", "StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("PostalCode");
 
@@ -568,8 +563,7 @@ namespace GCS_CO.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("RegionAbbrev")
                         .HasPrincipalKey("RegionAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("GCS_CO.Models.Skill", null)
                         .WithMany("Employees")
@@ -616,8 +610,7 @@ namespace GCS_CO.Migrations
                         .WithMany("States")
                         .HasForeignKey("RegionAbbrev")
                         .HasPrincipalKey("RegionAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Region");
                 });
@@ -692,8 +685,7 @@ namespace GCS_CO.Migrations
 
             modelBuilder.Entity("GCS_CO.Models.PostalCode", b =>
                 {
-                    b.Navigation("City")
-                        .IsRequired();
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("GCS_CO.Models.Region", b =>

@@ -9,6 +9,7 @@ using GCS_CO.Data;
 using GCS_CO.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GCS_CO.Controllers.Admin
 {
@@ -70,56 +71,6 @@ namespace GCS_CO.Controllers.Admin
             return View(region);
         }
 
-        // GET: Regions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Regions == null)
-            {
-                return NotFound();
-            }
-
-            var region = await _context.Regions.FindAsync(id);
-            if (region == null)
-            {
-                return NotFound();
-            }
-            return View(region);
-        }
-
-        // POST: Regions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RegionId,RegionAbbrev,RegionName")] Region region)
-        {
-            if (id != region.RegionId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(region);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RegionExists(region.RegionId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(region);
-        }
 
         // GET: Regions/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -151,6 +102,36 @@ namespace GCS_CO.Controllers.Admin
             var region = await _context.Regions.FindAsync(id);
             if (region != null)
             {
+                var statesToUpdate = await _context.States.Where(s => s.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+                foreach (var state in statesToUpdate)
+                {
+                    state.RegionAbbrev = null;
+                }
+
+                var postalCodesToUpdate = await _context.PostalCodes.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+                foreach (var postalCode in postalCodesToUpdate)
+                {
+                    postalCode.RegionAbbrev = null;
+                }
+
+                var citiesToUpdate = await _context.Cities.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+                foreach (var city in citiesToUpdate)
+                {
+                    city.RegionAbbrev = null;
+                }
+
+                var addressesToUpdate = await _context.Addresses.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+                foreach (var address in addressesToUpdate)
+                {
+                    address.RegionAbbrev = null;
+                }
+
+                var employeeesToUpdate = await _context.Employees.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+                foreach (var employee in employeeesToUpdate)
+                {
+                    employee.RegionAbbrev = null;
+                }
+                //TODO: customer region set to null
                 _context.Regions.Remove(region);
             }
             

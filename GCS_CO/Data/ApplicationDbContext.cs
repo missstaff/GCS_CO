@@ -71,8 +71,8 @@ namespace GCS_CO.Data
                 .WithOne(s => s.Region)
                 .HasPrincipalKey(r => r.RegionAbbrev)
                 .HasForeignKey(s => s.RegionAbbrev)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             builder.Entity<State>()
                 .HasKey(s => s.StateId);
@@ -81,8 +81,8 @@ namespace GCS_CO.Data
                 .HasOne(s => s.Region)
                 .WithMany(r => r.States)
                 .HasForeignKey(s => s.RegionAbbrev)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             builder.Entity<State>()
                .HasMany(pc => pc.PostalCodes)
@@ -126,7 +126,7 @@ namespace GCS_CO.Data
                 .HasOne<City>(c => c.City)
                 .WithOne(pc => pc.PostalCode)
                 .HasForeignKey<City>(c => new { c.CityName, c.StateAbbrev })
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(false);
 
             builder.Entity<City>()
@@ -173,15 +173,15 @@ namespace GCS_CO.Data
                 .WithOne(s => s.Region)
                 .HasPrincipalKey(r => r.RegionAbbrev)
                 .HasForeignKey(s => s.RegionAbbrev)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             builder.Entity<Employee>()
                 .HasOne(s => s.Region)
                 .WithMany(r => r.Employees)
                 .HasForeignKey(s => s.RegionAbbrev)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             builder.Entity<Employee>()
                 .HasMany(e => e.Addresses) // Employee has many Addresses

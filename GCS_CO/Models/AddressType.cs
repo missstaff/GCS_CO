@@ -8,6 +8,6 @@ namespace GCS_CO.Models
         public int AddressTypeId { get; set; }
         public required string Type { get; set; }
 
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Address>? Addresses { get; set; }
     }
 }
