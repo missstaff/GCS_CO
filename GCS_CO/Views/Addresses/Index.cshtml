@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeId)
+                @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Employee.FirstName)
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City.StateAbbrev)
+                @Html.DisplayNameFor(model => model.StateAbbrev)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PostalCode)
@@ -46,7 +46,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Employee.FirstName)
@@ -58,16 +58,15 @@
                 @Html.DisplayFor(modelItem => item.Street)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City.CityName)
+                @Html.DisplayFor(modelItem => item.CityName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City.StateAbbrev)
-            </td>
+                @Html.DisplayFor(modelItem => item.StateAbbrev)
             <td>
                 @Html.DisplayFor(modelItem => item.PostalCode)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RegionAbbrev)
+                @Html.DisplayFor(modelItem => item.City.RegionAbbrev)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AddressType.Type)

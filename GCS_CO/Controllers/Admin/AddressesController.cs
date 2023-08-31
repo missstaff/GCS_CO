@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GCS_CO.Data;
 using GCS_CO.Models;
-using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace GCS_CO.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
     public class AddressesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -55,11 +54,9 @@ namespace GCS_CO.Controllers.Admin
             ViewData["Type"] = new SelectList(_context.AddressTypes, "Type", "Type");
             ViewData["CityName"] = new SelectList(_context.Cities, "CityName", "CityName");
             ViewData["StateAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "StateAbbrev");
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
+            ViewData["RegionAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "RegionAbbrev");
             ViewData["PostalCode"] = new SelectList(_context.Cities, "Code", "Code");
-            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev");
-
-
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return View();
         }
 
@@ -68,7 +65,7 @@ namespace GCS_CO.Controllers.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AddressId,EmployeeId,Number,Street,CityName,StateAbbrev,PostalCode,RegionAbbrev,Type")] Address address)
+        public async Task<IActionResult> Create([Bind("AddressId,EmployeeId,Street,CityName,StateAbbrev,PostalCode,RegionAbbrev,Type")] Address address)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +75,10 @@ namespace GCS_CO.Controllers.Admin
             }
             ViewData["Type"] = new SelectList(_context.AddressTypes, "Type", "Type", address.Type);
             ViewData["CityName"] = new SelectList(_context.Cities, "CityName", "CityName", address.CityName);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "RegionAbbrev", address.EmployeeId);
+            ViewData["StateAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "StateAbbrev", address.StateAbbrev);
+            ViewData["RegionAbbrev"] = new SelectList(_context.Cities, "RegionAbbrev", "RegionAbbrev", address.RegionAbbrev);
+            ViewData["PostalCode"] = new SelectList(_context.Cities, "Code", "Code", address.PostalCode);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", address.EmployeeId);
             return View(address);
         }
 
@@ -90,18 +90,17 @@ namespace GCS_CO.Controllers.Admin
                 return NotFound();
             }
 
-            var address = await _context.Addresses.Include(a => a.Employee).FirstOrDefaultAsync(a => a.AddressId == id);
+            var address = await _context.Addresses.FindAsync(id);
             if (address == null)
             {
                 return NotFound();
             }
             ViewData["Type"] = new SelectList(_context.AddressTypes, "Type", "Type", address.Type);
             ViewData["CityName"] = new SelectList(_context.Cities, "CityName", "CityName", address.CityName);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", address.EmployeeId);
-            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "StateAbbrev", address.StateAbbrev);
+            ViewData["StateAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "StateAbbrev", address.StateAbbrev);
+            ViewData["RegionAbbrev"] = new SelectList(_context.Cities, "RegionAbbrev", "RegionAbbrev", address.RegionAbbrev);
             ViewData["PostalCode"] = new SelectList(_context.Cities, "Code", "Code", address.PostalCode);
-            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev", address.RegionAbbrev);
-
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", address.EmployeeId);
             return View(address);
         }
 
@@ -110,7 +109,7 @@ namespace GCS_CO.Controllers.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AddressId,EmployeeId,Number,Street,CityName,StateAbbrev,PostalCode,RegionAbbrev,Type")] Address address)
+        public async Task<IActionResult> Edit(int id, [Bind("AddressId,EmployeeId,Street,CityName,StateAbbrev,PostalCode,RegionAbbrev,Type")] Address address)
         {
             if (id != address.AddressId)
             {
@@ -139,8 +138,10 @@ namespace GCS_CO.Controllers.Admin
             }
             ViewData["Type"] = new SelectList(_context.AddressTypes, "Type", "Type", address.Type);
             ViewData["CityName"] = new SelectList(_context.Cities, "CityName", "CityName", address.CityName);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "RegionAbbrev", address.EmployeeId);
-            ViewData["StateAbbrev"] = new SelectList(_context.States, "StateAbbrev", "StateAbbrev", address.StateAbbrev);
+            ViewData["StateAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "StateAbbrev", address.StateAbbrev);
+            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev", address.RegionAbbrev);
+            ViewData["PostalCode"] = new SelectList(_context.Cities, "Code", "Code", address.PostalCode);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", address.EmployeeId);
             return View(address);
         }
 

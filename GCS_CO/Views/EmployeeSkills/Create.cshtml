@@ -16,7 +16,7 @@
                 <label asp-for="EmployeeId" class="control-label"></label>
                 <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
             </div>
-            <div class="form-group">
+          @*  <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -25,12 +25,12 @@
                 <label asp-for="LastName" class="control-label"></label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="SkillName" class="control-label"></label>
                 <select asp-for="SkillName" class ="form-control" asp-items="ViewBag.SkillName"></select>
             </div>
-            <div class="form-group">
+          @*  <div class="form-group">
                 <label asp-for="SkillDescription" class="control-label"></label>
                 <input asp-for="SkillDescription" class="form-control" />
                 <span asp-validation-for="SkillDescription" class="text-danger"></span>
@@ -39,7 +39,7 @@
                 <label asp-for="SkillPayRate" class="control-label"></label>
                 <input asp-for="SkillPayRate" class="form-control" />
                 <span asp-validation-for="SkillPayRate" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

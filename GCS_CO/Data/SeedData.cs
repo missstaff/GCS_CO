@@ -506,7 +506,7 @@ namespace GCS_CO.Data
                 return;
             }
             var addressTypes = new List<AddressType>
-            { 
+            {
                 new AddressType
                 {
                     Type = "Home",
@@ -538,7 +538,7 @@ namespace GCS_CO.Data
             {
                 return;
             }
-          
+
             var employees = new List<Employee>
             {
 
@@ -565,7 +565,7 @@ namespace GCS_CO.Data
                     EmployeeSkills = new List<EmployeeSkill>
                     {
                         new EmployeeSkill
-                        { 
+                        {
                             Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Shawna" && e.LastName == "Staff" && e.Email == "staffs@gcs.com"),
                             Skill = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1"),
                             SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillName,
@@ -955,6 +955,967 @@ namespace GCS_CO.Data
                             }
                         },
                     },
+                    new Employee
+                    {
+                        FirstName = "Steve",
+                        LastName = "Zebras",
+                        Email = "zebrass@gcs.com",
+                        PhoneNumber = "5647882394",
+                        DateHired = new DateTime(2023, 1, 1),
+                        RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                        Addresses = new List<Address>
+                        {
+                            new Address
+                            {
+                                Street = "658 Tower Avenue",
+                                CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                            }
+                        },
+                        EmployeeSkills = new List<EmployeeSkill>
+                        {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Steve" && e.LastName == "Zebras" && e.Email == "zebrass@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1").SkillPayRate,
+                                FirstName = "Steve",
+                                LastName = "Zebras",
+
+                            },
+                             new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Steve" && e.LastName == "Zebras" && e.Email == "zebrass@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1").SkillPayRate,
+                                FirstName = "Steve",
+                                LastName = "Zebras",
+
+                            },
+                              new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Steve" && e.LastName == "Zebras" && e.Email == "zebrass@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2").SkillPayRate,
+                                FirstName = "Steve",
+                                LastName = "Zebras",
+
+                            },
+                        },
+                   },
+                     new Employee
+                    {
+                        FirstName = "Joseph",
+                        LastName = "Chandler",
+                        Email = "chandlerj@gcs.com",
+                        PhoneNumber = "4857896011",
+                        DateHired = new DateTime(2023, 1, 1),
+                        RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                        Addresses = new List<Address>
+                        {
+                            new Address
+                            {
+                                Street = "9809 Old Ranch Road",
+                                CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                            }
+                        },
+                        EmployeeSkills = new List<EmployeeSkill>
+                        {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Joseph" && e.LastName == "Chandler" && e.Email == "chandlerj@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2").SkillPayRate,
+                                FirstName = "Joseph",
+                                LastName = "Chandler",
+
+                            },
+                        },
+                   },
+                      new Employee
+                      {
+                        FirstName = "Shane",
+                        LastName = "Burklow",
+                        Email = "burklows@gcs.com",
+                        PhoneNumber = "4857896011",
+                        DateHired = new DateTime(2023, 1, 1),
+                        RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                        Addresses = new List<Address>
+                        {
+                            new Address
+                            {
+                                Street = "45678 MountainView Street",
+                                CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                            }
+                        },
+                        EmployeeSkills = new List<EmployeeSkill>
+                        {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Shane" && e.LastName == "Burklow" && e.Email == "burklows@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 2").SkillPayRate,
+                                FirstName = "Shane",
+                                LastName = "Burklow",
+
+                            },
+                        },
+                      },
+                      new Employee
+                      {
+                            FirstName = "Peter",
+                            LastName = "Yarbrough",
+                            Email = "yarbroughp@gcs.com",
+                            PhoneNumber = "4857896011",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "123 Eclaire Road",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Peter" && e.LastName == "Yarbrough" && e.Email == "yarbroughp@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1").SkillPayRate,
+                                FirstName = "Peter",
+                                LastName = "Yarbrough",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Peter" && e.LastName == "Yarbrough" && e.Email == "yarbroughp@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2").SkillPayRate,
+                                FirstName = "Peter",
+                                LastName = "Yarbrough",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Peter" && e.LastName == "Yarbrough" && e.Email == "yarbroughp@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "SQL SERVER DBA"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "SQL SERVER DBA").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "SQL SERVER DBA").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "SQL SERVER DBA").SkillPayRate,
+                                FirstName = "Peter",
+                                LastName = "Yarbrough",
+
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Mary",
+                            LastName = "Smith",
+                            Email = "smithm@gcs.com",
+                            PhoneNumber = "5887665665",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "555 Alder Street",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Mary" && e.LastName == "Smith" && e.Email == "smithm@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 1").SkillPayRate,
+                                FirstName = "Mary",
+                                LastName = "Smith",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Mary" && e.LastName == "Smith" && e.Email == "smithm@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 1").SkillPayRate,
+                                FirstName = "Mary",
+                                LastName = "Smith",
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Mary" && e.LastName == "Smith" && e.Email == "smithm@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "NETWORK ENGINEER 2").SkillPayRate,
+                                FirstName = "Mary",
+                                LastName = "Smith",
+                            },
+                              new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Mary" && e.LastName == "Smith" && e.Email == "smithm@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR").SkillPayRate,
+                                FirstName = "Mary",
+                                LastName = "Smith",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Johnathon",
+                            LastName = "Pascoe",
+                            Email = "pascoej@gcs.com",
+                            PhoneNumber = "5887665665",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "PO Box 12",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "PO Box")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Johnathon" && e.LastName == "Pascoe" && e.Email == "pascoej@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "DB DESIGNER 2").SkillPayRate,
+                                FirstName = "Johnathon",
+                                LastName = "Pascoe",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Johnathon" && e.LastName == "Pascoe" && e.Email == "pascoej@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "ORACLE DBA"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ORACLE DBA").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "ORACLE DBA").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "ORACLE DBA").SkillPayRate,
+                                FirstName = "Johnathon",
+                                LastName = "Pascoe",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Chris",
+                            LastName = "Kattan",
+                            Email = "pascoej@gcs.com",
+                            PhoneNumber = "9075654432",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "87 5Th Avenue #288",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Chris" && e.LastName == "Kattan" && e.Email == "kattanc@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillPayRate,
+                                FirstName = "Chris",
+                                LastName = "Kattan",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Chris" && e.LastName == "Kattan" && e.Email == "kattanc@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillPayRate,
+                                FirstName = "Chris",
+                                LastName = "Kattan",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Victor",
+                            LastName = "Ephanor",
+                            Email = "ephanorv@gcs.com",
+                            PhoneNumber = "6878774434",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "2398 Fulton Avenue",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Victor" && e.LastName == "Ephanor" && e.Email == "ephanorv@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillPayRate,
+                                FirstName = "Victor",
+                                LastName = "Ephanor",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Victor" && e.LastName == "Ephanor" && e.Email == "ephanorv@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillPayRate,
+                                FirstName = "Victor",
+                                LastName = "Ephanor",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Anna",
+                            LastName = "Summers",
+                            Email = "summersa@gcs.com",
+                            PhoneNumber = "3327282432",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "7767 Cristal Lane",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Anna" && e.LastName == "Summers" && e.Email == "summersa@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillPayRate,
+                                FirstName = "Anna",
+                                LastName = "Summers",
+
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Maria",
+                            LastName = "Ellis",
+                            Email = "ellism@gcs.com",
+                            PhoneNumber = "6223476584",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "12877 Wimding Way",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Maria" && e.LastName == "Ellis" && e.Email == "ellism@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 1").SkillPayRate,
+                                FirstName = "Maria",
+                                LastName = "Ellis",
+
+                            },
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Maria" && e.LastName == "Ellis" && e.Email == "ellism@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "VB 1").SkillPayRate,
+                                FirstName = "Maria",
+                                LastName = "Ellis",
+
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Melissa",
+                            LastName = "Batts",
+                            Email = "battsm@gcs.com",
+                            PhoneNumber = "9165052345",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "2345 Trajan Drive",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Melissa" && e.LastName == "Batts" && e.Email == "battsm@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COBOL 2").SkillPayRate,
+                                FirstName = "Melissa",
+                                LastName = "Batts",
+
+                            },
+                      },
+                   },
+
+                      new Employee
+                      {
+                            FirstName = "Jose",
+                            LastName = "Smith",
+                            Email = "smithj@gcs.com",
+                            PhoneNumber = "5036782022",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "2345 Carmicheal Way",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Jose" && e.LastName == "Smith" && e.Email == "smithj@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillPayRate,
+                                FirstName = "Jose",
+                                LastName = "Smith",
+                            },
+                      },
+                   },
+
+                      new Employee
+                      {
+                            FirstName = "Adam",
+                            LastName = "Rogers",
+                            Email = "rogersa@gcs.com",
+                            PhoneNumber = "2134334423",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "2345 Trajan",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Adam" && e.LastName == "Rogers" && e.Email == "rogersa@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillPayRate,
+                                FirstName = "Adam",
+                                LastName = "Rogers",
+                            },
+                      },
+                   },
+                       new Employee
+                      {
+                            FirstName = "Leslie",
+                            LastName = "Cope",
+                            Email = "copel@gcs.com",
+                            PhoneNumber = "61123278733",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "12134 White Rock Road",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Leslie" && e.LastName == "Cope" && e.Email == "copel@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 1").SkillPayRate,
+                                FirstName = "Leslie",
+                                LastName = "Cope",
+                            },
+                      },
+                   },
+                        new Employee
+                      {
+                            FirstName = "Bible",
+                            LastName = "Hannah",
+                            Email = "hannahb@gcs.com",
+                            PhoneNumber = "5434346777",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "347 Auburn Boulevard",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Bible" && e.LastName == "Hannah" && e.Email == "hannahb@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "C++ 2").SkillPayRate,
+                                FirstName = "Bible",
+                                LastName = "Hannah",
+                            },
+                        },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Christopher",
+                            LastName = "Newton",
+                            Email = "newtonc@gcs.com",
+                            PhoneNumber = "2134334423",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "4355 Canberra Drive",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Christopher" && e.LastName == "Newton" && e.Email == "newtonc@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "VB 2").SkillPayRate,
+                                FirstName = "Christopher",
+                                LastName = "Newton",
+                            },
+                             new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Christopher" && e.LastName == "Newton" && e.Email == "newtonc@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 2").SkillPayRate,
+                                FirstName = "Christopher",
+                                LastName = "Newton",
+                            },
+                              new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Christopher" && e.LastName == "Newton" && e.Email == "newtonc@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2").SkillPayRate,
+                                FirstName = "Christopher",
+                                LastName = "Newton",
+                            },
+                                new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Christopher" && e.LastName == "Newton" && e.Email == "newtonc@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "WEB ADMINISTRATOR").SkillPayRate,
+                                FirstName = "Christopher",
+                                LastName = "Newton",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Miriam",
+                            LastName = "Duarte",
+                            Email = "duartem@gcs.com",
+                            PhoneNumber = "9447621198",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "3477 Folsom Drive",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Fresno" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Miriam" && e.LastName == "Duarte" && e.Email == "duartem@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "COLD FUSION 1").SkillPayRate,
+                                FirstName = "Miriam",
+                                LastName = "Duarte",
+                            },
+                             new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Miriam" && e.LastName == "Duarte" && e.Email == "duartem@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 1").SkillPayRate,
+                                FirstName = "Miriam",
+                                LastName = "Duarte",
+                            },
+                              new EmployeeSkill
+                            {
+                              Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Miriam" && e.LastName == "Duarte" && e.Email == "duartem@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "ASP 2").SkillPayRate,
+                                FirstName = "Miriam",
+                                LastName = "Duarte",
+                            },
+                      },
+                   },
+                       new Employee
+                      {
+                            FirstName = "Kilby",
+                            LastName = "Surgina",
+                            Email = "surginak@gcs.com",
+                            PhoneNumber = "9447621198",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "New York").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "576 116th Avenue",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Kilby" && e.LastName == "Surgina" && e.Email == "surginak@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER").SkillPayRate,
+                                FirstName = "Kilby",
+                                LastName = "Surgina",
+                            },
+                      },
+                   },
+                       new Employee
+                      {
+                            FirstName = "Larry",
+                            LastName = "Bender",
+                            Email = "benderl@gcs.com",
+                            PhoneNumber = "7616652345",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "New York").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "777 125TH Avenue",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Larry" && e.LastName == "Bender" && e.Email == "benderl@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "TECHNICAL WRITER").SkillPayRate,
+                                FirstName = "Larry",
+                                LastName = "Bender",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Brad",
+                            LastName = "Paine",
+                            Email = "paineb@gcs.com",
+                            PhoneNumber = "5907865645",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "New York").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "6543 Oak Way",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Brad" && e.LastName == "Paine" && e.Email == "paineb@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillPayRate,
+                                FirstName = "Brad",
+                                LastName = "Paine",
+                            },
+                      },
+                   },
+
+                      new Employee
+                      {
+                            FirstName = "Roger",
+                            LastName = "Mudd",
+                            Email = "muddr@gcs.com",
+                            PhoneNumber = "7765548787",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "5567 View Way",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Roger" && e.LastName == "Mudd" && e.Email == "muddr@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillPayRate,
+                                FirstName = "Roger",
+                                LastName = "Mudd",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Tiffany",
+                            LastName = "Kinyan",
+                            Email = "kinyant@gcs.com",
+                            PhoneNumber = "2123234567",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "California").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "4567 Coloma Street",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Sacramento" && c.StateAbbrev == "CA")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Tiffany" && e.LastName == "Kinyan" && e.Email == "kinyant@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillPayRate,
+                                FirstName = "Tiffany",
+                                LastName = "Kinyan",
+                            },
+                      },
+                   },
+                      new Employee
+                      {
+                            FirstName = "Sean",
+                            LastName = "Conner",
+                            Email = "conners@gcs.com",
+                            PhoneNumber = "6546675645",
+                            DateHired = new DateTime(2023, 1, 1),
+                            RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Illinois").RegionAbbrev,
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Street = "8867 Trifecta Avenue",
+                                    CityName = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.CityName,
+                                    PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.Code,
+                                    StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.StateAbbrev,
+                                    RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Chicago" && c.StateAbbrev == "IL")?.RegionAbbrev,
+                                    Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
+                                }
+                            },
+                            EmployeeSkills = new List<EmployeeSkill>
+                            {
+                            new EmployeeSkill
+                            {
+                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Sean" && e.LastName == "Conner" && e.Email == "conners@gcs.com"),
+                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER"),
+                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillName,
+                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillDescription,
+                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "PROJECT MANAGER").SkillPayRate,
+                                FirstName = "Sean",
+                                LastName = "Conner",
+                            },
+                      },
+                   },
             };
 
             await context.Employees.AddRangeAsync(employees);
@@ -962,3 +1923,4 @@ namespace GCS_CO.Data
         }
     }
 }
+

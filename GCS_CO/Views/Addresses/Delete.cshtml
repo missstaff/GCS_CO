@@ -17,18 +17,6 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EmployeeId)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Employee.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Employee.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Employee.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Employee.LastName)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Street)
         </dt>
@@ -39,7 +27,13 @@
             @Html.DisplayNameFor(model => model.City)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City.CityName)
+            @Html.DisplayFor(model => model.CityName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StateAbbrev)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StateAbbrev)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PostalCode)
@@ -51,7 +45,7 @@
             @Html.DisplayNameFor(model => model.RegionAbbrev)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RegionAbbrev)
+            @Html.DisplayFor(model => model.City.RegionAbbrev)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AddressType)
