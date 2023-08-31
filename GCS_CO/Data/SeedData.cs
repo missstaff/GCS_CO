@@ -719,7 +719,7 @@ namespace GCS_CO.Data
                                 Street = "715 112th Street #56",
                                 CityName = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.CityName,
                                 PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.Code,
-                                StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New YorkCity" && c.StateAbbrev == "NY")?.StateAbbrev,
+                                StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.StateAbbrev,
                                 RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "New York City" && c.StateAbbrev == "NY")?.RegionAbbrev,
                                 Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Mailing")?.Type,
                             }

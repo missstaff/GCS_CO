@@ -14,14 +14,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId">
+                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId" required >
                     <option value="">-- Select an Employee Id --</option>
                 </select>
                 <span asp-validation-for="EmployeeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
+                <input asp-for="Street" class="form-control" required />
                 <span asp-validation-for="Street" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,20 +37,6 @@
                     <option value="">-- Select a State --</option>
                 </select>
                 <span asp-validation-for="StateAbbrev" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostalCode" class="control-label"></label>
-                <select asp-for="PostalCode" class="form-control" asp-items="ViewBag.PostalCode" required>
-                    <option value="">-- Select a PostalCode --</option>
-                </select>
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RegionAbbrev" class="control-label"></label>
-                <select asp-for="RegionAbbrev" class="form-control" asp-items="ViewBag.RegionAbbrev" required>
-                    <option value="">-- Select a Region --</option>
-                </select>
-                <span asp-validation-for="RegionAbbrev" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>

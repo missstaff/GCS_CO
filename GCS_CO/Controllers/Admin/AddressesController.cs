@@ -54,7 +54,7 @@ namespace GCS_CO.Controllers.Admin
             ViewData["Type"] = new SelectList(_context.AddressTypes, "Type", "Type");
             ViewData["CityName"] = new SelectList(_context.Cities, "CityName", "CityName");
             ViewData["StateAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "StateAbbrev");
-            ViewData["RegionAbbrev"] = new SelectList(_context.Cities, "StateAbbrev", "RegionAbbrev");
+            ViewData["RegionAbbrev"] = new SelectList(_context.Cities, "RegionAbbrev", "RegionAbbrev");
             ViewData["PostalCode"] = new SelectList(_context.Cities, "Code", "Code");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return View();
@@ -67,9 +67,25 @@ namespace GCS_CO.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AddressId,EmployeeId,Street,CityName,StateAbbrev,PostalCode,RegionAbbrev,Type")] Address address)
         {
+            var city = await _context.PostalCodes.FirstOrDefaultAsync(a => a.CityName == address.CityName && a.StateAbbrev == address.StateAbbrev);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            var newAddress = new Address
+            {
+                EmployeeId = address.EmployeeId,
+                Street = address.Street,
+                CityName = address.CityName,
+                StateAbbrev = address.StateAbbrev,
+                PostalCode = city.Code,
+                RegionAbbrev = city.RegionAbbrev,
+                Type = address.Type
+            };
             if (ModelState.IsValid)
             {
-                _context.Add(address);
+                _context.Add(newAddress);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -111,16 +127,33 @@ namespace GCS_CO.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AddressId,EmployeeId,Street,CityName,StateAbbrev,PostalCode,RegionAbbrev,Type")] Address address)
         {
+
             if (id != address.AddressId)
             {
                 return NotFound();
             }
+            var city = await _context.PostalCodes.FirstOrDefaultAsync(a => a.CityName == address.CityName && a.StateAbbrev == address.StateAbbrev);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            var newAddress = new Address
+            {
+                EmployeeId = address.EmployeeId,
+                Street = address.Street,
+                CityName = address.CityName,
+                StateAbbrev = address.StateAbbrev,
+                PostalCode = city.Code,
+                RegionAbbrev = city.RegionAbbrev,
+                Type = address.Type
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(address);
+                    _context.Update(newAddress);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
