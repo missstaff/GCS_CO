@@ -374,9 +374,9 @@ namespace GCS_CO.Migrations
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CityName = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     StateAbbrev = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegionAbbrev = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -394,7 +394,8 @@ namespace GCS_CO.Migrations
                         columns: x => new { x.CityName, x.StateAbbrev },
                         principalSchema: "GCS",
                         principalTable: "Cities",
-                        principalColumns: new[] { "CityName", "StateAbbrev" });
+                        principalColumns: new[] { "CityName", "StateAbbrev" },
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Addresses_Employees_EmployeeId",
                         column: x => x.EmployeeId,
