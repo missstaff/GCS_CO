@@ -739,41 +739,6 @@ namespace GCS_CO.Data
                             }
                         },
                   },
-                   new Employee
-                   {
-                        FirstName = "Beth",
-                        LastName = "Sewel",
-                        Email = "sewelb@gcs.com",
-                        PhoneNumber = "7889876767",
-                        DateHired = new DateTime(2023, 1, 1),
-                        RegionAbbrev = context.States.FirstOrDefault(s => s.StateName == "Texas").RegionAbbrev,
-                        Addresses = new List<Address>
-                        {
-                            new Address
-                            {
-                                Street = "776230 Three Doves Lane",
-                                CityName = context.Cities.FirstOrDefault(c => c.CityName == "Arlington" && c.StateAbbrev == "TX")?.CityName,
-                                PostalCode = context.Cities.FirstOrDefault(c => c.CityName == "Arlington" && c.StateAbbrev == "TX")?.Code,
-                                StateAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Arlington" && c.StateAbbrev == "TX")?.StateAbbrev,
-                                RegionAbbrev = context.Cities.FirstOrDefault(c => c.CityName == "Arlington" && c.StateAbbrev == "TX")?.RegionAbbrev,
-                                Type = context.AddressTypes.FirstOrDefault(a => a.Type == "Home")?.Type,
-                            }
-                        },
-                        EmployeeSkills = new List<EmployeeSkill>
-                        {
-                            new EmployeeSkill
-                            {
-                                Employee = context.Employees.FirstOrDefault(e => e.FirstName == "Beth" && e.LastName == "Sewel" && e.Email == "sewelb@gcs.com"),
-                                Skill = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1"),
-                                SkillName = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1").SkillName,
-                                SkillDescription = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1").SkillDescription,
-                                SkillPayRate = context.Skills.FirstOrDefault(s => s.SkillName == "SYSTEMS ANALYST 1").SkillPayRate,
-                                FirstName = "Beth",
-                                LastName = "Sewel",
-
-                            }
-                        },
-                   },
                     new Employee
                     {
                         FirstName = "Beth",
