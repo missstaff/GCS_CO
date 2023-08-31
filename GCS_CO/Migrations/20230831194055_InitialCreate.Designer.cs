@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCS_CO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230829030215_InitialCreate")]
+    [Migration("20230831194055_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,18 +35,12 @@ namespace GCS_CO.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
 
                     b.Property<string>("CityName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionAbbrev")
@@ -249,26 +243,22 @@ namespace GCS_CO.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeSkillId"));
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SkillDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SkillName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("SkillPayRate")
+                    b.Property<int?>("SkillPayRate")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeSkillId");
@@ -515,8 +505,7 @@ namespace GCS_CO.Migrations
                     b.HasOne("GCS_CO.Models.Employee", "Employee")
                         .WithMany("Addresses")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GCS_CO.Models.AddressType", "AddressType")
                         .WithMany("Addresses")
@@ -528,7 +517,7 @@ namespace GCS_CO.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("CityName", "StateAbbrev")
                         .HasPrincipalKey("CityName", "StateAbbrev")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AddressType");
 
@@ -575,15 +564,13 @@ namespace GCS_CO.Migrations
                     b.HasOne("GCS_CO.Models.Employee", "Employee")
                         .WithMany("EmployeeSkills")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GCS_CO.Models.Skill", "Skill")
                         .WithMany("EmployeeSkills")
                         .HasForeignKey("SkillName")
                         .HasPrincipalKey("SkillName")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Employee");
 

@@ -52,7 +52,7 @@ namespace GCS_CO.Controllers.Admin
         // GET: EmployeeSkills/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "RegionAbbrev");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             ViewData["SkillName"] = new SelectList(_context.Skills, "SkillName", "SkillName");
             return View();
         }
@@ -64,13 +64,35 @@ namespace GCS_CO.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EmployeeSkillId,EmployeeId,FirstName,LastName,SkillName,SkillDescription,SkillPayRate")] EmployeeSkill employeeSkill)
         {
+            var skill = await _context.Skills.SingleOrDefaultAsync(s => s.SkillName == employeeSkill.SkillName);
+            if (skill == null)
+            {
+                // Handle the case where the skill is not found
+                return NotFound();
+            }
+
+            var employee = await _context.Employees.FindAsync(employeeSkill.EmployeeId);
+            if (employee == null)
+            {
+                // Handle the case where the skill is not found
+                return NotFound();
+            }
+            var newEmployeeSkill = new EmployeeSkill
+            {
+                EmployeeId = employeeSkill.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                SkillName = skill.SkillName,
+                SkillDescription = skill.SkillDescription,
+                SkillPayRate = skill.SkillPayRate
+            };
             if (ModelState.IsValid)
             {
-                _context.Add(employeeSkill);
+                _context.Add(newEmployeeSkill);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "RegionAbbrev", employeeSkill.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", employeeSkill.EmployeeId);
             ViewData["SkillName"] = new SelectList(_context.Skills, "SkillName", "SkillName", employeeSkill.SkillName);
             return View(employeeSkill);
         }

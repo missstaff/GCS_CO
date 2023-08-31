@@ -188,14 +188,16 @@ namespace GCS_CO.Data
                 .WithOne(a => a.Employee)  // Address has one Employee
                 .HasForeignKey(a => a.EmployeeId) // Foreign key
                 .OnDelete(DeleteBehavior.Cascade) // Cascade delete if an employee is deleted
-                .IsRequired(); // Addresses are required for an Employee
+                .IsRequired(false); // Addresses are required for an Employee
 
 
             builder.Entity<Employee>()
                 .HasMany(e => e.EmployeeSkills) // Employee has many EmployeeSkills
                 .WithOne(es => es.Employee)      // EmployeeSkill has one Employee
                 .HasForeignKey(es => es.EmployeeId) // Foreign key
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if an employee is deleted
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
+
 
             builder.Entity<EmployeeSkill>()
                 .HasKey(es => es.EmployeeSkillId);
@@ -204,14 +206,16 @@ namespace GCS_CO.Data
                 .HasOne(es => es.Employee)
                 .WithMany(e => e.EmployeeSkills)
                 .HasForeignKey(es => es.EmployeeId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
 
             builder.Entity<EmployeeSkill>()
                 .HasOne(es => es.Skill)
                 .WithMany(s => s.EmployeeSkills)
                 .HasPrincipalKey(s => s.SkillName)
                 .HasForeignKey(es => es.SkillName)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
 
 
         }

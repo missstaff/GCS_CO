@@ -9,7 +9,6 @@ namespace GCS_CO.Models
 
         public Employee? Employee { get; set; }
         public int EmployeeId { get; set; }
-        public required string Number { get; set; }
         public required string Street { get; set; }
 
         public City? City { get; set; }
