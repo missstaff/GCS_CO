@@ -1,5 +1,6 @@
 using GCS_CO.Data;
 using GCS_CO.Models;
+using GCS_CO.Repos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
      .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddTransient<IRegions, RegionsRepo>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default User settings.

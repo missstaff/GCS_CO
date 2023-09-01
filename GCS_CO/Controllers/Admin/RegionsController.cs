@@ -10,37 +10,46 @@ using GCS_CO.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using GCS_CO.Repos;
 
 namespace GCS_CO.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     public class RegionsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        public RegionsController(ApplicationDbContext context)
+        //public RegionsController(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
+
+        IRegions repo;
+
+        public RegionsController(IRegions r)
         {
-            _context = context;
+            repo = r;
         }
+
 
         // GET: Regions
         public async Task<IActionResult> Index()
         {
-              return _context.Regions != null ? 
-                          View(await _context.Regions.ToListAsync()) :
+              return repo.GetAllRegionsAsync != null ? 
+                          View(await repo.GetAllRegionsAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Regions'  is null.");
         }
 
         // GET: Regions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Regions == null)
+            if (id == null || repo.GetAllRegionsAsync() == null)
             {
                 return NotFound();
             }
 
-            var region = await _context.Regions
-                .FirstOrDefaultAsync(m => m.RegionId == id);
+            var region = await repo.GetRegionAsync(id);
+               
             if (region == null)
             {
                 return NotFound();
@@ -64,8 +73,8 @@ namespace GCS_CO.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                _context.Add(region);
-                await _context.SaveChangesAsync();
+                repo.AddRegionAsync(region);
+                await repo.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(region);
@@ -75,13 +84,13 @@ namespace GCS_CO.Controllers.Admin
         // GET: Regions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Regions == null)
+            if (id == null || repo.GetRegionAsync(id) == null)
             {
                 return NotFound();
             }
 
-            var region = await _context.Regions
-                .FirstOrDefaultAsync(m => m.RegionId == id);
+            var region = await repo.GetRegionAsync(id);
+                
             if (region == null)
             {
                 return NotFound();
@@ -95,53 +104,58 @@ namespace GCS_CO.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Regions == null)
+            if (repo.GetRegionAsync(id) == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Regions'  is null.");
             }
-            var region = await _context.Regions.FindAsync(id);
-            if (region != null)
-            {
-                var statesToUpdate = await _context.States.Where(s => s.RegionAbbrev == region.RegionAbbrev).ToListAsync();
-                foreach (var state in statesToUpdate)
-                {
-                    state.RegionAbbrev = null;
-                }
+            var region = await repo.GetRegionAsync(id);
+            //if (region != null)
+            //{
+            //    var statesToUpdate = await repo.States.Where(s => s.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+            //    foreach (var state in statesToUpdate)
+            //    {
+            //        state.RegionAbbrev = null;
+            //    }
 
-                var postalCodesToUpdate = await _context.PostalCodes.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
-                foreach (var postalCode in postalCodesToUpdate)
-                {
-                    postalCode.RegionAbbrev = null;
-                }
+            //    var postalCodesToUpdate = await _context.PostalCodes.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+            //    foreach (var postalCode in postalCodesToUpdate)
+            //    {
+            //        postalCode.RegionAbbrev = null;
+            //    }
 
-                var citiesToUpdate = await _context.Cities.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
-                foreach (var city in citiesToUpdate)
-                {
-                    city.RegionAbbrev = null;
-                }
+            //    var citiesToUpdate = await _context.Cities.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+            //    foreach (var city in citiesToUpdate)
+            //    {
+            //        city.RegionAbbrev = null;
+            //    }
 
-                var addressesToUpdate = await _context.Addresses.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
-                foreach (var address in addressesToUpdate)
-                {
-                    address.RegionAbbrev = null;
-                }
+            //    var addressesToUpdate = await _context.Addresses.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+            //    foreach (var address in addressesToUpdate)
+            //    {
+            //        address.RegionAbbrev = null;
+            //    }
 
-                var employeeesToUpdate = await _context.Employees.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
-                foreach (var employee in employeeesToUpdate)
-                {
-                    employee.RegionAbbrev = null;
-                }
+            //    var employeeesToUpdate = await _context.Employees.Where(e => e.RegionAbbrev == region.RegionAbbrev).ToListAsync();
+            //    foreach (var employee in employeeesToUpdate)
+            //    {
+            //        employee.RegionAbbrev = null;
+            //    }
                 //TODO: customer region set to null
-                _context.Regions.Remove(region);
-            }
+            //    _context.Regions.Remove(region);
+            //}
             
-            await _context.SaveChangesAsync();
+            await repo.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RegionExists(int id)
         {
-          return (_context.Regions?.Any(e => e.RegionId == id)).GetValueOrDefault();
+            var exists = false;
+            if (repo.GetRegionAsync(id) != null)
+            {
+                exists = true;
+            }
+            return exists;
         }
     }
 }
