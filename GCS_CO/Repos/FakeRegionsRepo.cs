@@ -28,6 +28,11 @@ namespace GCS_CO.Repos
             return Task.FromResult<Region>(region);
         }
 
+        public Task DisassociateChildRecordsAsync(int id)
+        {
+            return Task.CompletedTask;
+        }
+
         public Task<IQueryable<Region>> GetAllRegionsAsync()
         {
             return Task.FromResult(regions.AsQueryable());
@@ -54,7 +59,7 @@ namespace GCS_CO.Repos
 
         public Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return SaveChangesAsync();
         }
     }
 }

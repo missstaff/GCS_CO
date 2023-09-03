@@ -20,6 +20,7 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRegions, RegionsRepo>();
+builder.Services.AddTransient<IStates, StatesRepo>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default User settings.

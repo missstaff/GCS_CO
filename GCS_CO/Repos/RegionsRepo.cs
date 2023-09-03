@@ -56,5 +56,52 @@ namespace GCS_CO.Repos
         {
             return context.SaveChangesAsync();
         }
+
+        public async Task DisassociateChildRecordsAsync(int regionId)
+        {
+            var region = await GetRegionAsync(regionId);
+            if (region != null)
+            {
+                //Find and update related records to set Region property to null
+
+                //States
+                var relatedStates = context.States.Where(s => s.RegionAbbrev == region.RegionAbbrev);
+                foreach (var state in relatedStates)
+                {
+                    state.Region = null;
+                }
+
+                //Postal Codes
+                var relatedPostalCodes = context.PostalCodes.Where(pc => pc.RegionAbbrev == region.RegionAbbrev);
+                foreach (var postalCode in relatedPostalCodes)
+                {
+                    postalCode.RegionAbbrev = null;
+                }
+
+                //Cities
+                var relatedCities = context.Cities.Where(c => c.RegionAbbrev == region.RegionAbbrev);
+                foreach (var city in relatedCities)
+                {
+                    city.RegionAbbrev = null;
+                }
+
+                //Addresses
+                var relatedAddresses = context.Addresses.Where(a => a.RegionAbbrev == region.RegionAbbrev);
+                foreach (var address in relatedAddresses)
+                {
+                    address.RegionAbbrev = null;
+                }
+
+                //Employees (if applicable)
+                var relatedEmployees = context.Employees.Where(e => e.RegionAbbrev == region.RegionAbbrev);
+                foreach (var employee in relatedEmployees)
+                {
+                    employee.Region = null;
+                }
+
+                await context.SaveChangesAsync();
+            }
+        }
+
     }
 }

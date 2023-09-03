@@ -1,46 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GCS_CO.Data;
 using GCS_CO.Models;
-using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
+using GCS_CO.Repos;
 
 namespace GCS_CO.Controllers.Admin
 {
     [Authorize(Roles = "Admin")]
     public class StatesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        IStates repo;
 
-        public StatesController(ApplicationDbContext context)
+        public StatesController(IStates r)
         {
-            _context = context;
+            repo = r;
         }
-
         // GET: States
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.States.Include(s => s.Region);
-            return View(await applicationDbContext.ToListAsync());
+            return repo.GetAllStatesAsync != null ?
+                          View(await repo.GetAllStatesAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.States'  is null.");
         }
 
         // GET: States/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.States == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var state = await _context.States
-                .Include(s => s.Region)
-                .FirstOrDefaultAsync(m => m.StateId == id);
+            var state = await repo.GetStateAsync(id);
+
             if (state == null)
             {
                 return NotFound();
@@ -50,11 +43,14 @@ namespace GCS_CO.Controllers.Admin
         }
 
         // GET: States/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev");
+            var regionAbbrevs = await repo.GetDistinctRegionAbbrevAsync();
+            ViewData["RegionAbbrev"] = new SelectList(regionAbbrevs);
+
             return View();
         }
+
 
         // POST: States/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -65,30 +61,41 @@ namespace GCS_CO.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                _context.Add(state);
-                await _context.SaveChangesAsync();
+                await repo.AddStateAsync(state);
+                await repo.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev", state.RegionAbbrev);
+            var regionAbbrevs = await repo.GetDistinctRegionAbbrevAsync();
+            ViewData["RegionAbbrev"] = new SelectList(regionAbbrevs, "RegionAbbrev", "RegionAbbrev", state.RegionAbbrev);
             return View(state);
         }
 
         // GET: States/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.States == null)
+            if (id == null || repo.GetAllStatesAsync() == null)
             {
                 return NotFound();
             }
 
-            var state = await _context.States.FindAsync(id);
+            var state = await repo.GetStateAsync(id);
             if (state == null)
             {
                 return NotFound();
             }
-            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev", state.RegionAbbrev);
+
+            // Retrieve all states for the SelectList
+            var allStates = await repo.GetAllStatesAsync();
+
+            // Populate ViewBag.RegionAbbrev with a SelectList using all states
+            ViewBag.RegionAbbrev = new SelectList(allStates, "RegionAbbrev", "RegionAbbrev", state.RegionAbbrev);
+
             return View(state);
         }
+
+
+
+
 
         // POST: States/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -107,30 +114,31 @@ namespace GCS_CO.Controllers.Admin
             {
                 try
                 {
-                    var postalCodesToUpdate = await _context.PostalCodes.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
-                    foreach (var postalCode in postalCodesToUpdate)
-                    {
-                        postalCode.RegionAbbrev = state.RegionAbbrev;
-                    }
+                    //var postalCodesToUpdate = await repo.PostalCodes.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                    //foreach (var postalCode in postalCodesToUpdate)
+                    //{
+                    //    postalCode.RegionAbbrev = state.RegionAbbrev;
+                    //}
 
-                    var citiesToUpdate = await _context.Cities.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
-                    foreach (var city in citiesToUpdate)
-                    {
-                        city.RegionAbbrev = state.RegionAbbrev;
-                    }
+                    //var citiesToUpdate = await _context.Cities.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                    //foreach (var city in citiesToUpdate)
+                    //{
+                    //    city.RegionAbbrev = state.RegionAbbrev;
+                    //}
 
-                    var addressesToUpdate = await _context.Addresses.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
-                    foreach (var address in addressesToUpdate)
-                    {
-                        address.RegionAbbrev = state.RegionAbbrev;
-                    }
+                    //var addressesToUpdate = await _context.Addresses.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                    //foreach (var address in addressesToUpdate)
+                    //{
+                    //    address.RegionAbbrev = state.RegionAbbrev;
+                    //}
 
-                    _context.Update(state);
-                    await _context.SaveChangesAsync();
+                    repo.UpdateStateAsync(state, id);
+                    await repo.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StateExists(state.StateId))
+                    var exists = await StateExists(state.StateId);
+                    if (exists)
                     {
                         return NotFound();
                     }
@@ -141,21 +149,20 @@ namespace GCS_CO.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionAbbrev"] = new SelectList(_context.Regions, "RegionAbbrev", "RegionAbbrev", state.RegionAbbrev);
+            var regionAbbrevs = await repo.GetDistinctRegionAbbrevAsync();
+            ViewData["RegionAbbrev"] = new SelectList(regionAbbrevs, "RegionAbbrev", "RegionAbbrev", state.RegionAbbrev);
             return View(state);
         }
 
         // GET: States/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.States == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var state = await _context.States
-                .Include(s => s.Region)
-                .FirstOrDefaultAsync(m => m.StateId == id);
+            var state = await repo.GetStateAsync(id);
             if (state == null)
             {
                 return NotFound();
@@ -169,33 +176,30 @@ namespace GCS_CO.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.States == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.States'  is null.");
-            }
-            var state = await _context.States.FindAsync(id);
+            var state = await repo.GetStateAsync(id);
             if (state != null)
             {
-                var addresses = await _context.Addresses.Where(a => a.StateAbbrev == state.StateAbbrev).ToListAsync();
-                var postalCodes = await _context.PostalCodes.Where(e => e.StateAbbrev == state.StateAbbrev).ToListAsync();
+                var addresses = await repo.GetAddressesForStateAsync(state.StateAbbrev);
+                var postalCodes = await repo.GetPostalCodesForStateAsync(state.StateAbbrev);
                 if (postalCodes.Any() || addresses.Any())
                 {
-                    // You can use TempData to store a message and display it after redirect
+                    //You can use TempData to store a message and display it after redirect
                     TempData["DeleteErrorMessage"] = "Cannot delete this state because it has associated records.";
 
                     return RedirectToAction(nameof(Index));
                 }
 
-                _context.States.Remove(state);
+                await repo.DeleteStateAsync(id);
             }
             
-            await _context.SaveChangesAsync();
+            await repo.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StateExists(int id)
+        private async Task<bool> StateExists(int id)
         {
-          return (_context.States?.Any(e => e.StateId == id)).GetValueOrDefault();
+            var state = await repo.GetStateAsync(id);
+            return state != null;
         }
     }
 }
