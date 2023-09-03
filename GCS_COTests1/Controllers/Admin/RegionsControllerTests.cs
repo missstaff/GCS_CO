@@ -1,13 +1,7 @@
 ﻿using Xunit;
-using GCS_CO.Controllers.Admin;
 using GCS_CO.Models;
-using GCS_CO.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GCS_CO.Repos;
+
 
 namespace GCS_CO.Controllers.Admin.Tests
 {
@@ -48,6 +42,44 @@ namespace GCS_CO.Controllers.Admin.Tests
             Assert.Equal("North", movies[1].RegionName);
             Assert.Equal("East", movies[2].RegionName);
         }
+
+        [Fact]
+        public void GetAllRegions()
+        {
+            var repo = new FakeRegionsRepo();
+            var controller = new RegionsController(repo);
+
+            repo.Regions.Add(new Region()
+            {
+                RegionId = 1,
+                RegionAbbrev = "W",
+                RegionName = "West",
+
+            });
+            repo.Regions.Add(new Region()
+            {
+                RegionId = 2,
+                RegionAbbrev = "N",
+                RegionName = "North",
+
+            });
+            repo.Regions.Add(new Region()
+            {
+                RegionId = 3,
+                RegionAbbrev = "E",
+                RegionName = "East",
+
+            });
+
+            var regions = repo.Regions.ToList();
+
+            Assert.Equal(3, regions.Count);
+            Assert.Equal("West", regions[0].RegionName);
+            Assert.Equal("North", regions[1].RegionName);
+            Assert.Equal("East", regions[2].RegionName);
+
+        }
+
         [Fact]
         public void GetARegion()
         {
@@ -83,6 +115,7 @@ namespace GCS_CO.Controllers.Admin.Tests
             Assert.Equal("East", region?.RegionName);
             Assert.Equal("E", region?.RegionAbbrev);
         }
+
         [Fact()]
         public void DeleteConfirmedTest()
         {
