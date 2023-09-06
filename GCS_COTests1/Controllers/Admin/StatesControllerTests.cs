@@ -46,7 +46,7 @@ namespace GCS_CO.Controllers.Admin.Tests
             Assert.Equal("Miami", states[2].StateName);
         }
 
-        [Fact]
+        [Fact()]
         public void GetAllStates()
         {
             var repo = new FakeStatesRepo();
@@ -86,7 +86,7 @@ namespace GCS_CO.Controllers.Admin.Tests
 
         }
 
-        [Fact]
+        [Fact()]
         public void GetAState()
         {
             var repo = new FakeStatesRepo();
@@ -167,7 +167,7 @@ namespace GCS_CO.Controllers.Admin.Tests
             Assert.Equal("Miami", states[1].StateName);
         }
 
-        [Fact]
+        [Fact()]
         public void UpdateState()
         {
             var repo = new FakeStatesRepo();

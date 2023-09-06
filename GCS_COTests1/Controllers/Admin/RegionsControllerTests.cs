@@ -43,7 +43,7 @@ namespace GCS_CO.Controllers.Admin.Tests
             Assert.Equal("East", movies[2].RegionName);
         }
 
-        [Fact]
+        [Fact()]
         public void GetAllRegions()
         {
             var repo = new FakeRegionsRepo();
@@ -80,7 +80,7 @@ namespace GCS_CO.Controllers.Admin.Tests
 
         }
 
-        [Fact]
+        [Fact()]
         public void GetARegion()
         {
             var repo = new FakeRegionsRepo();
